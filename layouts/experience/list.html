@@ -1,0 +1,75 @@
+{{ define "head" }}
+<meta name="description" content="Professional Experience and Career Timeline of Zarif Ahmad Razin Bhuiyan">
+<!-- fontawesome -->
+<script defer src="{{ (printf "%sfontawesome-6/all-6.4.2.js" (.Site.Params.staticPath | default "")) | relURL }}"></script>
+<style>
+    .experience-list-card {
+        background-color: var(--secondary-bg, #ffffff);
+        border-radius: 12px;
+        border: 1px solid rgba(0, 0, 0, 0.05);
+        box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.04);
+        transition: transform 0.25s ease, box-shadow 0.25s ease;
+    }
+    .experience-list-card:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.06) !important;
+        border-color: rgba(204, 0, 0, 0.15) !important;
+    }
+    body.dark .experience-list-card {
+        background-color: #1e293b !important;
+        border-color: rgba(255, 255, 255, 0.06) !important;
+    }
+    body.dark .border-start {
+        border-color: rgba(255, 77, 77, 0.3) !important;
+    }
+    body.dark .timeline-dot {
+        border-color: #1e293b !important;
+    }
+</style>
+{{ end }}
+
+{{ define "title" }}
+{{ .Title }} | {{ .Site.Title }}
+{{ end }}
+
+{{ define "main" }}
+<div class="container pt-5">
+    <h2 class="text-center pb-2" style="font-weight: 800; color: var(--text-color);">Career Timeline</h2>
+    <h6 class="text-center text-muted mb-5" style="font-size: 1rem;">Complete history of academic teaching, training, and engineering roles</h6>
+    
+    <div class="row justify-content-center mb-5">
+        <div class="col-lg-9 col-md-11">
+            <div class="position-relative ps-4 border-start border-2" style="border-color: rgba(204, 0, 0, 0.3) !important;">
+                {{ range .Data.Pages }}
+                <div class="position-relative mb-5">
+                    <!-- Timeline Bullet Node -->
+                    <div class="position-absolute timeline-dot" style="left: -33px; top: 4px; width: 16px; height: 16px; border-radius: 50%; background-color: var(--primary-color); border: 4px solid var(--secondary-bg, #ffffff); box-shadow: 0 0 0 3px rgba(204, 0, 0, 0.15); z-index: 5;"></div>
+                    
+                    <!-- Content Card -->
+                    <div class="p-4 experience-list-card">
+                        <div class="d-flex flex-wrap justify-content-between align-items-baseline mb-3">
+                            <div>
+                                <h4 class="mb-1" style="font-weight: 700; font-size: 1.25rem; color: var(--text-color);">{{ .Title }}</h4>
+                                <span style="font-weight: 600; font-size: 0.95rem; color: var(--primary-color);">
+                                    {{ if .Params.companyUrl }}
+                                    <a href="{{ .Params.companyUrl }}" target="_blank" style="color: var(--primary-color); text-decoration: none;">{{ .Params.company }} <i class="fas fa-external-link-alt ms-1 small" style="font-size: 0.75rem;"></i></a>
+                                    {{ else }}
+                                    {{ .Params.company }}
+                                    {{ end }}
+                                </span>
+                            </div>
+                            <span class="text-muted small" style="font-weight: 600;">
+                                <i class="far fa-calendar-alt me-1"></i> {{ .Params.dateRange }}
+                            </span>
+                        </div>
+                        <div class="experience-content secondary-font text-secondary" style="font-size: 0.9rem; line-height: 1.6;">
+                            {{ .Content }}
+                        </div>
+                    </div>
+                </div>
+                {{ end }}
+            </div>
+        </div>
+    </div>
+</div>
+{{ end }}

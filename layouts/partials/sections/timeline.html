@@ -1,0 +1,104 @@
+{{ $recentPostsPath := .Site.Params.timeline.path | default "blogs" }}
+{{- /* Get the blogs section page */ -}}
+{{ $blogsSection := site.GetPage "section" $recentPostsPath }}
+{{ $allSectionPosts := slice }}
+{{ if $blogsSection }}
+  {{ $allSectionPosts = $blogsSection.RegularPages }}
+{{ end }}
+{{ $currentNumOfrecentPosts := len $allSectionPosts }} 
+{{ if and (gt $currentNumOfrecentPosts 0) (.Site.Params.timeline.enable | default false) }} 
+<style>
+  .timeline-card {
+    transition: transform 0.25s ease, box-shadow 0.25s ease;
+    border: 1px solid rgba(0, 0, 0, 0.08);
+  }
+  .timeline-card:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 0.75rem 1.5rem rgba(0, 0, 0, 0.12) !important;
+  }
+  .badge-timeline {
+    background-color: {{ .Site.Params.color.primaryColor | default "#cc0000" }};
+    color: #ffffff !important;
+    font-size: 0.75rem;
+    font-weight: 600;
+    border-radius: 4px;
+    padding: 0.25em 0.6em;
+    margin-right: 0.4rem;
+    display: inline-block;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+  }
+  .timeline-btn-more {
+    background-color: {{ .Site.Params.color.primaryColor | default "#cc0000" }} !important;
+    border-color: {{ .Site.Params.color.primaryColor | default "#cc0000" }} !important;
+    color: #ffffff !important;
+    font-weight: 500;
+    padding: 0.6rem 1.8rem;
+    border-radius: 30px;
+    transition: all 0.2s ease;
+  }
+  .timeline-btn-more:hover {
+    filter: brightness(1.15);
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+    transform: scale(1.02);
+  }
+  .timeline-card-read {
+    color: {{ .Site.Params.color.primaryColor | default "#cc0000" }} !important;
+    border-color: {{ .Site.Params.color.primaryColor | default "#cc0000" }} !important;
+    font-weight: 500;
+    transition: all 0.2s ease;
+  }
+  .timeline-card-read:hover {
+    background-color: {{ .Site.Params.color.primaryColor | default "#cc0000" }} !important;
+    color: #ffffff !important;
+  }
+</style>
+
+<div class="container py-3" id="life-events">
+    {{ $recentPostsCount := .Site.Params.timeline.count | default 3 }}
+    {{ $recentPosts := $allSectionPosts | first $recentPostsCount }}
+    <div class="h3 text-center text-secondary py-3">
+        {{ .Site.Params.timeline.title | default (i18n "recent_posts") }}
+    </div>
+    <div class="row justify-content-center">
+        {{ range $recentPosts }}
+        <div class="col-lg-4 col-md-6 pt-2">
+            <div class="card h-100 timeline-card">
+                {{ if and (not (.Site.Params.timeline.disableFeaturedImage | default false)) (.Params.image) }}
+                <div class="card-header p-0">
+                    <a href="{{ .RelPermalink }}">
+                        <img src="{{ .Params.image }}" class="card-img-top" alt="{{ .Title }}" style="object-fit: cover; height: 200px;">
+                    </a>
+                </div>
+                {{ end }}
+                <div class="card-body bg-transparent p-3 shadow-sm">
+                    <div class="mb-2">
+                        {{ range .Params.tags }}
+                        <span class="badge-timeline">{{ . }}</span>
+                        {{ end }}
+                    </div>
+                    <a href="{{ .RelPermalink }}" class="primary-font card-title">
+                        <h5 class="card-title bg-transparent" title="{{ .Title }}" style="font-weight: 600;">{{ .Title | truncate 30 }}</h5>
+                    </a>
+                    <div class="card-text secondary-font">
+                        <p>{{ .Summary | truncate 200 }}</p>
+                    </div>
+                </div>
+                <div class="mt-auto card-footer bg-transparent border-0 d-flex justify-content-between align-items-center pb-3">
+                    <span class="text-muted small">{{ .Date | time.Format (":date_long" | default "January 2, 2006") }}</span>
+                    <a href="{{ .RelPermalink }}" class="btn btn-outline-primary btn-sm timeline-card-read">{{ .Site.Params.terms.read | default (i18n "read") }}</a>
+                </div>
+            </div>
+        </div>
+        {{ end }}
+    </div>
+    
+    {{ if gt $currentNumOfrecentPosts $recentPostsCount }}
+    <div class="text-center pt-5">
+        <a href="{{ $blogsSection.RelPermalink }}" class="btn timeline-btn-more">
+            View All Life Events →
+        </a>
+    </div>
+    {{ end }}
+</div>
+{{ end }}

@@ -1,0 +1,100 @@
+{{ $thoughts := .Site.GetPage "wandering-thoughts" }}
+{{ if and .Site.Params.wandering_thoughts.enable $thoughts }}
+<section id="wandering-thoughts" class="py-5" style="background-color: var(--secondary-bg-color, #f8fafc);">
+    <div class="container">
+        <!-- Section Header -->
+        <div class="text-center mb-5">
+            <h2 class="section-title" style="font-weight: 800; font-size: 2.2rem; color: var(--text-color);">
+                {{ .Site.Params.wandering_thoughts.title | default "Wandering Thoughts" }}
+            </h2>
+            <div class="accent-line mx-auto mb-3" style="width: 60px; height: 3px; background-color: var(--primary-color);"></div>
+            <p class="text-muted" style="font-size: 1.05rem;">
+                {{ .Site.Params.wandering_thoughts.subtitle | default "Casual writings, personal reflections, and logs beyond the academic desk" }}
+            </p>
+        </div>
+
+        <!-- Thoughts Grid Preview -->
+        <div class="row justify-content-center">
+            {{ range first 3 $thoughts.RegularPages }}
+            <div class="col-lg-4 col-md-6 mb-4">
+                <div class="thought-card h-100 d-flex flex-column" style="transition: transform 0.3s ease, box-shadow 0.3s ease; border-radius: 12px; overflow: hidden; background-color: var(--bg-color, #ffffff); box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05); border: 1px solid rgba(0,0,0,0.06); padding: 24px;">
+                    <!-- Date & Reading Time -->
+                    <div class="d-flex justify-content-between align-items-center mb-3">
+                        <span class="text-muted" style="font-size: 0.8rem; font-weight: 600;">
+                            <i class="far fa-calendar-alt me-1"></i> {{ .Date.Format "Jan 2, 2006" }}
+                        </span>
+                        <span class="text-muted" style="font-size: 0.8rem;">
+                            <i class="far fa-clock me-1"></i> {{ .ReadingTime }} min read
+                        </span>
+                    </div>
+
+                    <!-- Title -->
+                    <h4 class="mb-2" style="font-size: 1.2rem; font-weight: 700;">
+                        <a href="{{ .RelPermalink }}" style="color: var(--text-color); text-decoration: none; transition: color 0.2s ease;" class="thought-title-link">
+                            {{ .Title }}
+                        </a>
+                    </h4>
+
+                    <!-- Summary -->
+                    <p class="text-secondary small mb-4 flex-grow-1" style="line-height: 1.5; font-size: 0.85rem;">
+                        {{ .Summary | truncate 150 }}
+                    </p>
+
+                    <!-- Tags & Link -->
+                    <div class="mt-auto d-flex justify-content-between align-items-center flex-wrap gap-2">
+                        <div class="d-flex flex-wrap gap-1">
+                            {{ range .Params.tags }}
+                            <span class="badge" style="background-color: rgba(204, 0, 0, 0.08); color: var(--primary-color); font-size: 0.7rem; font-weight: 600; padding: 4px 8px; border-radius: 4px;">
+                                {{ . }}
+                            </span>
+                            {{ end }}
+                        </div>
+                        <a href="{{ .RelPermalink }}" class="read-more-link" style="color: var(--primary-color); text-decoration: none; font-size: 0.85rem; font-weight: 700; transition: transform 0.2s ease;">
+                            Read Post <i class="fas fa-chevron-right ms-1 small" style="font-size: 0.75rem;"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+            {{ end }}
+        </div>
+
+        <!-- View All Button -->
+        <div class="text-center mt-4">
+            <a href="{{ "/wandering-thoughts/" | relURL }}" class="btn btn-outline-danger px-4 py-2" style="border-radius: 30px; font-weight: 600; border-color: var(--primary-color); color: var(--primary-color); transition: all 0.25s ease;">
+                View All Thoughts <i class="fas fa-arrow-right ms-1"></i>
+            </a>
+        </div>
+    </div>
+</section>
+
+<!-- Hover Styles -->
+<style>
+    .thought-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.08) !important;
+    }
+    .thought-card:hover .thought-title-link {
+        color: var(--primary-color) !important;
+    }
+    .thought-card:hover .read-more-link {
+        transform: translateX(3px);
+    }
+    #wandering-thoughts .btn-outline-danger:hover {
+        background-color: var(--primary-color);
+        color: var(--secondary-color, #ffffff) !important;
+        box-shadow: 0 4px 10px rgba(204, 0, 0, 0.2);
+    }
+    /* Dark Mode overrides */
+    body.dark #wandering-thoughts {
+        background-color: #0f172a !important;
+    }
+    body.dark .thought-card {
+        background-color: #1e293b !important;
+        border-color: rgba(255, 255, 255, 0.06) !important;
+    }
+    body.dark .thought-card .badge {
+        background-color: rgba(255, 77, 77, 0.12) !important;
+        color: #ff4d4d !important;
+    }
+</style>
+{{ end }}

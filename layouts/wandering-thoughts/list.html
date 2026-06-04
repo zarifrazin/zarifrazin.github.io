@@ -1,0 +1,227 @@
+{{ define "head" }}
+<meta name="description" content="Wandering Thoughts - Reflections, logs, and stories by Zarif Ahmad Razin Bhuiyan">
+<!-- fontawesome -->
+<script defer src="{{ (printf "%sfontawesome-6/all-6.4.2.js" (.Site.Params.staticPath | default "")) | relURL }}"></script>
+<style>
+    .thought-card {
+        transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.3s ease;
+        border-radius: 12px;
+        overflow: hidden;
+        background-color: var(--secondary-bg, #ffffff);
+        box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+        border: 1px solid rgba(0, 0, 0, 0.06);
+        padding: 24px;
+    }
+    .thought-card:hover {
+        transform: translateY(-6px);
+        box-shadow: 0 12px 20px -3px rgba(0, 0, 0, 0.08);
+    }
+    .thought-card:hover .thought-title-link {
+        color: var(--primary-color) !important;
+    }
+    .thought-card:hover .read-more-link {
+        transform: translateX(3px);
+    }
+    .filter-btn {
+        border: 1.5px solid #e2e8f0;
+        background: transparent;
+        color: #475569;
+        padding: 6px 16px;
+        font-size: 0.85rem;
+        font-weight: 600;
+        border-radius: 30px;
+        cursor: pointer;
+        transition: all 0.2s ease;
+    }
+    .filter-btn:hover {
+        border-color: #cc0000;
+        color: #cc0000;
+        background-color: rgba(204, 0, 0, 0.03);
+    }
+    .filter-btn.active {
+        background-color: #cc0000;
+        border-color: #cc0000;
+        color: #ffffff !important;
+        box-shadow: 0 3px 6px rgba(204, 0, 0, 0.15);
+    }
+    body.dark .thought-card {
+        background-color: #1e293b;
+        border-color: rgba(255, 255, 255, 0.06);
+        box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.2);
+    }
+    body.dark .filter-btn {
+        border-color: #334155;
+        color: #94a3b8;
+    }
+    body.dark .filter-btn:hover {
+        border-color: #ff4d4d;
+        color: #ff4d4d;
+        background-color: rgba(255, 77, 77, 0.03);
+    }
+    body.dark .filter-btn.active {
+        background-color: #ff4d4d;
+        border-color: #ff4d4d;
+        color: #0f172a !important;
+        box-shadow: 0 3px 6px rgba(255, 77, 77, 0.15);
+    }
+    body.dark .thought-card .badge {
+        background-color: rgba(255, 77, 77, 0.12) !important;
+        color: #ff4d4d !important;
+    }
+</style>
+{{ end }}
+
+{{ define "title" }}
+{{ .Title }} | {{ .Site.Title }}
+{{ end }}
+
+{{ define "main" }}
+<div class="container pt-5" id="list-page">
+    <h2 class="text-center pb-2" style="font-weight: 800; color: var(--text-color);">{{ .Title }}</h2>
+    <h6 class="text-center text-muted mb-4" style="font-size: 1rem;">Reflections, personal logs, and stories beyond the academic desk</h6>
+
+    <!-- Search and Tag Filters Container -->
+    <div class="row justify-content-center mb-5 px-3">
+        <div class="col-md-8">
+            <!-- Search Bar -->
+            <div class="input-group mb-4 shadow-sm" style="border-radius: 30px; overflow: hidden; border: 1px solid rgba(0,0,0,0.08); background-color: var(--bg-color, #ffffff);">
+                <span class="input-group-text border-0 ps-4 text-muted bg-transparent">
+                    <i class="fas fa-search"></i>
+                </span>
+                <input type="text" id="search-input" class="form-control border-0 py-3 ps-2 bg-transparent" placeholder="Search thoughts by title, content, or tags..." aria-label="Search thoughts" style="font-size: 0.95rem; outline: none; box-shadow: none; color: var(--text-color);">
+            </div>
+
+            <!-- Dynamic Tag Filters -->
+            {{ $tags := slice }}
+            {{ range .Data.Pages }}
+                {{ range .Params.tags }}
+                    {{ $tags = $tags | append . }}
+                {{ end }}
+            {{ end }}
+            {{ $tags = $tags | uniq }}
+
+            <div class="d-flex justify-content-center flex-wrap gap-2" id="tag-filters">
+                <button class="filter-btn active" data-filter="all">All Tags</button>
+                {{ range $tags }}
+                <button class="filter-btn" data-filter="{{ . | urlize }}">#{{ . }}</button>
+                {{ end }}
+            </div>
+        </div>
+    </div>
+
+    <!-- Grid Layout -->
+    <div class="px-3 mb-5">
+        <div class="row justify-content-start" id="thoughts-grid">
+            {{ range .Data.Pages }}
+            <div class="col-lg-4 col-md-6 p-3 thought-item" 
+                 data-title="{{ .Title | lower }}" 
+                 data-content="{{ .Summary | lower }}" 
+                 data-tags="{{ range .Params.tags }}{{ . | urlize }} {{ end }}">
+                <div class="thought-card h-100 d-flex flex-column">
+                    <!-- Date & Reading Time -->
+                    <div class="d-flex justify-content-between align-items-center mb-3">
+                        <span class="text-muted" style="font-size: 0.8rem; font-weight: 600;">
+                            <i class="far fa-calendar-alt me-1"></i> {{ .Date.Format "Jan 2, 2006" }}
+                        </span>
+                        <span class="text-muted" style="font-size: 0.8rem;">
+                            <i class="far fa-clock me-1"></i> {{ .ReadingTime }} min read
+                        </span>
+                    </div>
+
+                    <!-- Title -->
+                    <h4 class="mb-2" style="font-size: 1.25rem; font-weight: 700;">
+                        <a href="{{ .RelPermalink }}" style="color: var(--text-color); text-decoration: none; transition: color 0.2s ease;" class="thought-title-link">
+                            {{ .Title }}
+                        </a>
+                    </h4>
+
+                    <!-- Summary -->
+                    <p class="text-secondary small mb-4 flex-grow-1" style="line-height: 1.55; font-size: 0.85rem;">
+                        {{ .Summary }}
+                    </p>
+
+                    <!-- Tags & Button -->
+                    <div class="mt-auto d-flex justify-content-between align-items-center flex-wrap gap-2">
+                        <div class="d-flex flex-wrap gap-1">
+                            {{ range .Params.tags }}
+                            <span class="badge" style="background-color: rgba(204, 0, 0, 0.08); color: var(--primary-color); font-size: 0.7rem; font-weight: 600; padding: 4px 8px; border-radius: 4px;">
+                                {{ . }}
+                            </span>
+                            {{ end }}
+                        </div>
+                        <a href="{{ .RelPermalink }}" class="read-more-link" style="color: var(--primary-color); text-decoration: none; font-size: 0.85rem; font-weight: 700; transition: transform 0.2s ease;">
+                            Read Post <i class="fas fa-chevron-right ms-1 small" style="font-size: 0.75rem;"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+            {{ end }}
+        </div>
+        <!-- No results alert -->
+        <div id="no-results" class="text-center py-5 d-none">
+            <i class="far fa-frown text-muted mb-3" style="font-size: 3rem;"></i>
+            <h5 class="text-muted">No thoughts match your search or filter criteria.</h5>
+        </div>
+    </div>
+</div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const searchInput = document.getElementById('search-input');
+        const filterButtons = document.querySelectorAll('#tag-filters .filter-btn');
+        const thoughtItems = document.querySelectorAll('#thoughts-grid .thought-item');
+        const noResults = document.getElementById('no-results');
+
+        let currentFilter = 'all';
+        let searchQuery = '';
+
+        function filterThoughts() {
+            let visibleCount = 0;
+            
+            thoughtItems.forEach(item => {
+                const title = item.getAttribute('data-title');
+                const content = item.getAttribute('data-content');
+                const tags = item.getAttribute('data-tags').split(' ');
+
+                const matchesSearch = searchQuery === '' || 
+                                     title.includes(searchQuery) || 
+                                     content.includes(searchQuery) ||
+                                     tags.some(t => t.includes(searchQuery));
+                
+                const matchesTag = currentFilter === 'all' || 
+                                  tags.includes(currentFilter);
+
+                if (matchesSearch && matchesTag) {
+                    item.style.display = 'block';
+                    visibleCount++;
+                } else {
+                    item.style.display = 'none';
+                }
+            });
+
+            if (visibleCount === 0) {
+                noResults.classList.remove('d-none');
+            } else {
+                noResults.classList.add('d-none');
+            }
+        }
+
+        // Search event listener
+        searchInput.addEventListener('keyup', function(e) {
+            searchQuery = e.target.value.toLowerCase().trim();
+            filterThoughts();
+        });
+
+        // Filter button click listener
+        filterButtons.forEach(button => {
+            button.addEventListener('click', () => {
+                filterButtons.forEach(btn => btn.classList.remove('active'));
+                button.classList.add('active');
+
+                currentFilter = button.getAttribute('data-filter');
+                filterThoughts();
+            });
+        });
+    });
+</script>
+{{ end }}

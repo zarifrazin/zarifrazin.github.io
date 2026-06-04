@@ -1,0 +1,85 @@
+{{ $experiencePage := .Site.GetPage "experience" }}
+{{ if and .Site.Params.experience.enable $experiencePage }}
+<section id="experience" class="py-5" style="background-color: var(--secondary-bg-color, #f8fafc);">
+    <div class="container">
+        <!-- Section Header -->
+        <div class="text-center mb-5">
+            <h2 class="section-title" style="font-weight: 800; font-size: 2.2rem; color: var(--text-color);">
+                {{ .Site.Params.experience.title | default "Experience" }}
+            </h2>
+            <div class="accent-line mx-auto mb-3" style="width: 60px; height: 3px; background-color: var(--primary-color);"></div>
+        </div>
+
+        <!-- Timeline Container -->
+        <div class="row justify-content-center">
+            <div class="col-lg-9 col-md-11">
+                <div class="position-relative ps-4 border-start border-2" style="border-color: rgba(204, 0, 0, 0.3) !important;">
+                    {{ range first 3 (where $experiencePage.RegularPages "Params.featured" true) }}
+                    <div class="position-relative mb-5 experience-timeline-item">
+                        <!-- Timeline Bullet Node -->
+                        <div class="position-absolute timeline-dot" style="left: -33px; top: 4px; width: 16px; height: 16px; border-radius: 50%; background-color: var(--primary-color); border: 4px solid var(--secondary-bg, #ffffff); box-shadow: 0 0 0 3px rgba(204, 0, 0, 0.15); z-index: 5;"></div>
+                        
+                        <!-- Content Card -->
+                        <div class="p-4 experience-card" style="background-color: var(--bg-color, #ffffff); border-radius: 12px; border: 1px solid rgba(0, 0, 0, 0.05); box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.04); transition: transform 0.25s ease, box-shadow 0.25s ease;">
+                            <div class="d-flex flex-wrap justify-content-between align-items-baseline mb-3">
+                                <div>
+                                    <h4 class="mb-1" style="font-weight: 700; font-size: 1.25rem; color: var(--text-color);">{{ .Title }}</h4>
+                                    <span style="font-weight: 600; font-size: 0.95rem; color: var(--primary-color);">
+                                        {{ if .Params.companyUrl }}
+                                        <a href="{{ .Params.companyUrl }}" target="_blank" style="color: var(--primary-color); text-decoration: none;">{{ .Params.company }} <i class="fas fa-external-link-alt ms-1 small" style="font-size: 0.75rem;"></i></a>
+                                        {{ else }}
+                                        {{ .Params.company }}
+                                        {{ end }}
+                                    </span>
+                                </div>
+                                <span class="text-muted small" style="font-weight: 600;">
+                                    <i class="far fa-calendar-alt me-1"></i> {{ .Params.dateRange }}
+                                </span>
+                            </div>
+                            <div class="experience-content secondary-font text-secondary" style="font-size: 0.9rem; line-height: 1.6;">
+                                {{ .Content }}
+                            </div>
+                        </div>
+                    </div>
+                    {{ end }}
+                </div>
+            </div>
+        </div>
+
+        <!-- View All Button -->
+        <div class="text-center mt-4">
+            <a href="{{ "/experience/" | relURL }}" class="btn btn-outline-danger px-4 py-2" style="border-radius: 30px; font-weight: 600; border-color: var(--primary-color); color: var(--primary-color); transition: all 0.25s ease;">
+                View All Experience <i class="fas fa-arrow-right ms-1"></i>
+            </a>
+        </div>
+    </div>
+</section>
+
+<!-- Timeline Card Hover Effects -->
+<style>
+    .experience-timeline-item .experience-card:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.06) !important;
+        border-color: rgba(204, 0, 0, 0.15) !important;
+    }
+    #experience .btn-outline-danger:hover {
+        background-color: var(--primary-color);
+        color: var(--secondary-color, #ffffff) !important;
+        box-shadow: 0 4px 10px rgba(204, 0, 0, 0.2);
+    }
+    /* Dark Mode specific overrides */
+    body.dark #experience {
+        background-color: #0f172a !important;
+    }
+    body.dark #experience .border-start {
+        border-color: rgba(255, 77, 77, 0.3) !important;
+    }
+    body.dark .experience-timeline-item .experience-card {
+        background-color: #1e293b !important;
+        border-color: rgba(255, 255, 255, 0.06) !important;
+    }
+    body.dark .experience-timeline-item .timeline-dot {
+        border-color: #1e293b !important;
+    }
+</style>
+{{ end }}

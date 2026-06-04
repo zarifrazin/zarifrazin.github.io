@@ -1,0 +1,21 @@
+<!-- fontawesome -->
+<script defer src="{{ (printf "%sfontawesome-6/all-6.4.2.js" (.Site.Params.staticPath | default "")) | relURL }}"></script>
+
+<!-- Smooth scroll for all in-page anchor links -->
+<script>
+  document.addEventListener('DOMContentLoaded', function () {
+    document.querySelectorAll('a[href^="#"]').forEach(function (anchor) {
+      anchor.addEventListener('click', function (e) {
+        var targetId = this.getAttribute('href').slice(1);
+        if (!targetId) return;
+        var target = document.getElementById(targetId);
+        if (target) {
+          e.preventDefault();
+          target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+          // Update URL hash without reload
+          history.pushState(null, null, '#' + targetId);
+        }
+      });
+    });
+  });
+</script>

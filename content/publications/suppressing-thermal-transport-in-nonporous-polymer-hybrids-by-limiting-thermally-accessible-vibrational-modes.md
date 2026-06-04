@@ -1,0 +1,46 @@
+---
+title: "Suppressing Thermal Transport in Nonporous Polymer Hybrids by Limiting Thermally Accessible Vibrational Modes"
+date: 2026-01-01
+publishDate: "2026-01-01"
+authors:
+  - "Henry Worden"
+  - "Mihir Chandra"
+  - "Yijie Zhou"
+  - "Zarif Ahmad Razin Bhuiyan"
+  - "Mouyang Cheng"
+  - "Krishnamurthy Munusamy"
+  - "Duc Nghiem"
+  - "Weiguo Hu"
+  - "Weibo Yan"
+  - "Siyu Wu"
+  - "Ruipeng Li"
+  - "Jiang Zhang"
+  - "Anna Chatterji"
+  - "Shengjia Zhang"
+  - "Ilia N Ivanov"
+  - "Jihua Chen"
+  - "Jack C Lasseter"
+  - "Mengru Jin"
+  - "Derin Abitagaoglu"
+  - "Qing Tu"
+  - "Todd Emrick"
+  - "Jun Liu"
+  - "Yanfei Xu"
+authors_ieee: "H. Worden, M. Chandra, Y. Zhou, Z. A. R. Bhuiyan, M. Cheng, K. Munusamy, D. Nghiem, W. Hu, W. Yan, S. Wu, R. Li, J. Zhang, A. Chatterji, S. Zhang, I. N. Ivanov, J. Chen, J. C. Lasseter, M. Jin, D. Abitagaoglu, Q. Tu, T. Emrick, J. Liu, and Y. Xu"
+journal: "Materials Horizons"
+volume: ""
+issue: ""
+pages: ""
+publisher: "Royal Society of Chemistry"
+doi: ""
+link: "https://scholar.google.com/citations?view_op=view_citation&hl=en&user=HhNqllUAAAAJ&citation_for_view=HhNqllUAAAAJ:2osOgNQ5qMEC"
+featured: false
+type: "journal"
+status: "published"
+tags:
+  - "Polymers"
+  - "Publication"
+  - "Thermal Transport"
+---
+
+Achieving low thermal conductivity in nonporous polymer materials without compromising mechanical integrity remains a longstanding challenge. Conventional strategies, such as introducing porosity, are inherently limited in dense systems. Here, we demonstrate that thermal transport in polymer–organic filler hybrids is closely associated with the engineered availability of thermally accessible vibrational modes, rather than individual interfacial resistance or porosity. Using PU/organic filler hybrids as a model system, we show that incorporating rigid organic motifs shifts the vibrational density of states toward higher frequencies, where vibrational modes are weakly thermally populated at ambient conditions. This limits the number of heat-carrying channels, leading to suppressed thermal conductivity despite negligible individual interfacial resistance (~10⁻⁹ m² K W⁻¹). These findings provide initial evidence that

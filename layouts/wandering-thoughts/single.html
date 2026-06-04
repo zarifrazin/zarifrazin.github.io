@@ -1,0 +1,126 @@
+{{ define "head" }}
+<meta name="description" content="{{ .Params.summary | default .Title }}">
+<!-- fontawesome -->
+<script defer src="{{ (printf "%sfontawesome-6/all-6.4.2.js" (.Site.Params.staticPath | default "")) | relURL }}"></script>
+<style>
+    .post-content p {
+        line-height: 1.7;
+        font-size: 1.05rem;
+        margin-bottom: 1.5rem;
+        color: var(--secondary-text-color, #475569);
+    }
+    .post-content h2, .post-content h3 {
+        color: var(--text-color);
+        font-weight: 700;
+        margin-top: 2rem;
+        margin-bottom: 1rem;
+    }
+    body.dark .post-content p {
+        color: var(--secondary-text-color, #94a3b8);
+    }
+    .share-btn {
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        color: #ffffff !important;
+        transition: transform 0.2s ease, opacity 0.2s ease;
+        text-decoration: none !important;
+    }
+    .share-btn:hover {
+        transform: translateY(-2px);
+        opacity: 0.9;
+    }
+</style>
+{{ end }}
+
+{{ define "title" }}
+{{ .Title }} | {{ .Site.Title }}
+{{ end }}
+
+{{ define "main" }}
+<div class="container pt-5">
+    <div class="row justify-content-center">
+        <div class="col-lg-8 px-4">
+            <!-- Back Button -->
+            <div class="mb-4">
+                <a href="{{ "/wandering-thoughts/" | relURL }}" class="btn btn-sm btn-outline-secondary px-3 py-2" style="border-radius: 20px; font-weight: 600; font-size: 0.85rem;">
+                    <i class="fas fa-arrow-left me-1"></i> Back to Wandering Thoughts
+                </a>
+            </div>
+
+            <!-- Post Header -->
+            <header class="mb-4 pb-3 border-bottom">
+                <h1 class="mb-3" style="font-weight: 800; font-size: 2.2rem; line-height: 1.25; color: var(--text-color);">
+                    {{ .Title }}
+                </h1>
+                
+                <div class="d-flex flex-wrap align-items-center gap-3 text-muted small mb-3">
+                    <span>
+                        <i class="far fa-calendar-alt me-1"></i> {{ .Date.Format "January 2, 2006" }}
+                    </span>
+                    <span>
+                        <i class="far fa-clock me-1"></i> {{ .ReadingTime }} min read
+                    </span>
+                </div>
+
+                <div class="d-flex flex-wrap gap-1">
+                    {{ range .Params.tags }}
+                    <span class="badge" style="background-color: rgba(204, 0, 0, 0.08); color: var(--primary-color); font-size: 0.75rem; font-weight: 600; padding: 4px 10px; border-radius: 4px;">
+                        {{ . }}
+                    </span>
+                    {{ end }}
+                </div>
+            </header>
+
+            <!-- Post Body -->
+            <article class="post-content mb-5">
+                {{ .Content }}
+            </article>
+
+            <!-- Social Sharing Widgets -->
+            <div class="p-4 border-top border-bottom text-center mb-5" style="background-color: var(--secondary-bg-color, #f8fafc); border-radius: 12px;">
+                <h6 class="mb-3" style="font-weight: 700; color: var(--text-color);">Share this thoughts:</h6>
+                <div class="d-flex justify-content-center gap-2">
+                    <!-- LinkedIn -->
+                    <a class="share-btn" href="https://www.linkedin.com/shareArticle?mini=true&url={{ .Permalink | absURL }}&title={{ .Title }}" target="_blank" style="background-color: #0077b5;" title="Share on LinkedIn">
+                        <i class="fab fa-linkedin-in"></i>
+                    </a>
+                    <!-- Twitter/X -->
+                    <a class="share-btn" href="https://twitter.com/intent/tweet?text={{ .Title }}&url={{ .Permalink | absURL }}" target="_blank" style="background-color: #1da1f2;" title="Share on Twitter">
+                        <i class="fab fa-twitter"></i>
+                    </a>
+                    <!-- WhatsApp -->
+                    <a class="share-btn" href="https://api.whatsapp.com/send?text={{ .Title }}%20{{ .Permalink | absURL }}" target="_blank" style="background-color: #25d366;" title="Share on WhatsApp">
+                        <i class="fab fa-whatsapp"></i>
+                    </a>
+                    <!-- Email -->
+                    <a class="share-btn" href="mailto:?subject={{ .Title }}&body=Check this out: {{ .Permalink | absURL }}" style="background-color: #ea4335;" title="Share via Email">
+                        <i class="fas fa-envelope"></i>
+                    </a>
+                </div>
+            </div>
+
+            <!-- Footer Navigation -->
+            <div class="text-center mb-5">
+                <a href="{{ "/wandering-thoughts/" | relURL }}" class="btn btn-outline-danger px-4 py-2" style="border-radius: 30px; font-weight: 600; border-color: var(--primary-color); color: var(--primary-color);">
+                    Read More Wandering Thoughts
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+    /* Dark Mode badge compatibility */
+    body.dark .badge {
+        background-color: rgba(255, 77, 77, 0.12) !important;
+        color: #ff4d4d !important;
+    }
+    body.dark #list-page + div {
+        background-color: #1e293b !important;
+    }
+</style>
+{{ end }}

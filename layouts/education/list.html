@@ -1,0 +1,84 @@
+{{ define "head" }}
+<meta name="description" content="Education History and Academic Timeline of Zarif Ahmad Razin Bhuiyan">
+<!-- fontawesome -->
+<script defer src="{{ (printf "%sfontawesome-6/all-6.4.2.js" (.Site.Params.staticPath | default "")) | relURL }}"></script>
+<style>
+    .education-list-card {
+        background-color: var(--secondary-bg, #ffffff);
+        border-radius: 12px;
+        border: 1px solid rgba(0, 0, 0, 0.05);
+        border-left: 4px solid var(--primary-color) !important;
+        box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.04);
+        transition: transform 0.25s ease, box-shadow 0.25s ease;
+    }
+    .education-list-card:hover {
+        transform: translateY(-4px);
+        box-shadow: 0 10px 18px -3px rgba(0, 0, 0, 0.07) !important;
+    }
+    body.dark .education-list-card {
+        background-color: #1e293b !important;
+        border-color: rgba(255, 255, 255, 0.06) !important;
+        border-left-color: #ff4d4d !important;
+    }
+    body.dark .education-icon-container {
+        background-color: rgba(255, 77, 77, 0.1) !important;
+        color: #ff4d4d !important;
+    }
+    body.dark .education-list-card .badge {
+        background-color: rgba(255, 77, 77, 0.12) !important;
+        color: #ff4d4d !important;
+    }
+    body.dark .education-list-card a {
+        color: #cbd5e1 !important;
+        border-bottom-color: rgba(255,255,255,0.2) !important;
+    }
+</style>
+{{ end }}
+
+{{ define "title" }}
+{{ .Title }} | {{ .Site.Title }}
+{{ end }}
+
+{{ define "main" }}
+<div class="container pt-5">
+    <h2 class="text-center pb-2" style="font-weight: 800; color: var(--text-color);">Academic Background</h2>
+    <h6 class="text-center text-muted mb-5" style="font-size: 1rem;">Complete history of academic degrees, certificates, and institutions</h6>
+    
+    <div class="row justify-content-center mb-5">
+        <div class="col-lg-8">
+            {{ range .Data.Pages }}
+            <div class="education-list-card p-4 mb-4" style="position: relative;">
+                <!-- Degree Info -->
+                <div class="d-flex align-items-start mb-3">
+                    <div class="education-icon-container d-flex align-items-center justify-content-center me-3" style="width: 45px; height: 45px; border-radius: 8px; background-color: rgba(204, 0, 0, 0.06); color: var(--primary-color);">
+                        <i class="fas fa-graduation-cap fa-lg"></i>
+                    </div>
+                    <div>
+                        <h4 class="mb-1" style="font-weight: 800; font-size: 1.2rem; color: var(--text-color); line-height: 1.3;">{{ .Title }}</h4>
+                        <span style="font-weight: 600; font-size: 0.95rem; color: var(--secondary-text-color, #475569);">
+                            {{ if .Params.schoolUrl }}
+                            <a href="{{ .Params.schoolUrl }}" target="_blank" style="color: var(--secondary-text-color); text-decoration: none; border-bottom: 1px dotted rgba(0,0,0,0.2);">{{ .Params.school }} <i class="fas fa-external-link-alt ms-1 small" style="font-size: 0.7rem;"></i></a>
+                            {{ else }}
+                            {{ .Params.school }}
+                            {{ end }}
+                        </span>
+                    </div>
+                </div>
+
+                <!-- Date Badge -->
+                <div class="mb-3">
+                    <span class="badge" style="background-color: rgba(204, 0, 0, 0.08); color: var(--primary-color); font-size: 0.75rem; font-weight: 700; padding: 4px 10px; border-radius: 5px;">
+                        <i class="far fa-calendar-alt me-1"></i> {{ .Params.dateRange }}
+                    </span>
+                </div>
+                
+                <!-- Content -->
+                <div class="education-details-text secondary-font text-secondary mt-3" style="font-size: 0.9rem; line-height: 1.6;">
+                    {{ .Content }}
+                </div>
+            </div>
+            {{ end }}
+        </div>
+    </div>
+</div>
+{{ end }}

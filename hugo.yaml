@@ -1,0 +1,241 @@
+baseURL: https://zarifrazin.github.io/
+locale: en-us
+title: "My Personal Website"
+theme: "hugo-profile"
+
+outputs:
+  home:
+    - "HTML"
+    - "RSS"
+    - "JSON"
+  page:
+    - "HTML"
+    - "RSS"
+
+enableRobotsTXT: true
+
+#services:
+  #googleAnalytics:
+    #id: G-MEASUREMENT_ID
+  #disqus:
+    #shortname: your-disqus-shortname
+
+pagination:
+  pagerSize: 3
+
+markup:
+  goldmark:
+    renderer:
+      unsafe: true
+
+Menus:
+  main:
+    - name: "About"
+      url: "/#about"
+      weight: 5
+    - name: "Publications"
+      url: "/#publications"
+      weight: 10
+    - name: "Projects"
+      url: "/#projects"
+      weight: 15
+    - name: "Experience"
+      url: "/#experience"
+      weight: 20
+    - name: "Education"
+      url: "/#education"
+      weight: 25
+    - name: "Honors & Activities"
+      url: "/#achievements"
+      weight: 30
+    - name: "Resources"
+      url: "/#resources"
+      weight: 35
+    - name: "Life Events"
+      url: "/#life-events"
+      weight: 40
+    - name: "Gallery"
+      url: "/#gallery"
+      weight: 45
+    - name: "Wandering Thoughts"
+      url: "/#wandering-thoughts"
+      weight: 50
+
+params:
+  title: "Zarif Ahmad Razin Bhuiyan"
+  description: "PhD Student in Mechanical Engineering at North Carolina State University"
+  favicon: "/fav.png"
+
+  # Whether the fade animations on the home page will be enabled
+  animate: true
+
+  theme:
+    disableThemeToggle: true
+    defaultTheme: "light" # light or dark
+
+  font:
+    fontSize: 1rem
+    fontWeight: 400
+    lineHeight: 1.5
+    textAlign: left
+
+  # Premium Color Palette (NC State Red & Slate Gray Theme)
+  color:
+    textColor: "#1e293b"            # slate-800
+    secondaryTextColor: "#475569"   # slate-600
+    textLinkColor: "#cc0000"        # NC State Red
+    backgroundColor: "#f8fafc"      # slate-50
+    secondaryBackgroundColor: "#f1f5f9" # slate-100
+    primaryColor: "#cc0000"         # NC State Red
+    secondaryColor: "#ffffff"
+
+    darkmode:
+      textColor: "#f1f5f9"          # slate-100
+      secondaryTextColor: "#94a3b8" # slate-400
+      textLinkColor: "#ff4d4d"      # bright red accent
+      backgroundColor: "#0f172a"    # slate-900
+      secondaryBackgroundColor: "#1e293b" # slate-800
+      primaryColor: "#ff4d4d"
+      secondaryColor: "#1e293b"
+
+  navbar:
+    align: ms-auto # Left: ms-auto | center: mx-auto | right: me-auto
+    brandName: "AB Zarif Razin"
+    showBrandLogo: false
+    disableSearch: true
+    stickyNavBar:
+      enable : true
+      showOnScrollUp : false
+    enableSeparator: false
+    menus:
+      disableAbout: true
+      disableExperience: true
+      disableEducation: true
+      disableProjects: true
+      disableAchievements: true
+      disableContact: true
+
+  # Hero Section
+  hero:
+    enable: true
+    intro: "Hi, my name is"
+    title: "Zarif Ahmad Razin Bhuiyan"
+    subtitle: "PhD Student in Mechanical Engineering at NC State University"
+    content: "Greetings and welcome to my personal website! I'm Zarif. As a Mechanical Engineer, I completed my Bachelor's degree from Bangladesh University of Engineering and Technology (BUET) in May 2022. I'm currently pursuing a PhD in Mechanical Engineering at North Carolina State University (NCSU) in Raleigh, NC. My research focuses on interfacial thermal transport at the nano-scale using Molecular Dynamics (MD) simulations. Before joining NCSU, I served as a Lecturer at Sonargaon University (SU) and a Teaching Assistant (TA) at BUET."
+    button:
+      enable: true
+      name: "Get in Touch"
+      url: "#contact"
+      download: false
+      newPage: false
+    image: "/images/profile.jpg"
+    roundImage: true
+    socialLinks:
+      fontAwesomeIcons:
+        - icon: fab fa-github
+          url: "https://github.com/abzarif"
+        - icon: fab fa-linkedin
+          url: "https://www.linkedin.com/in/zarif-razin"
+        - icon: fab fa-facebook
+          url: "http://fb.com/zarif.razin"
+        - icon: fas fa-envelope
+          url: "mailto:your-email@ncsu.edu"
+
+  # About Section
+  about:
+    enable: true
+    title: "About Me"
+    content: |-
+      I am a passionate Mechanical Engineering researcher and educator. Though I was born in the Cumilla district, my childhood was spent in the village of Kalipur in the Chandpur district, situated on the tranquil banks of the magnificent Meghna River.
+
+      My academic and professional journey has taken me from BUET in Bangladesh to NC State University in the USA. I have served both as a Lecturer at Sonargaon University (SU) and a Teaching Assistant at BUET, which has solidified my commitment to academic excellence and research.
+    skills:
+      enable: true
+      title: "Here are a few areas and technologies I work with:"
+      items:
+        - "Molecular Dynamics (MD) / LAMMPS"
+        - "Finite Element Analysis (FEA) / ANSYS"
+        - "Computational Fluid Dynamics (CFD)"
+        - "MATLAB & Python Programming"
+        - "CAD Modeling & 3D Printing"
+        - "Heat Transfer Equipment Design"
+
+  # Experience Section
+  experience:
+    enable: true
+    title: "Experience"
+    path: "experience"
+    count: 3
+
+  # Education Section
+  education:
+    enable: true
+    title: "Education"
+    path: "education"
+    count: 4
+
+  # Projects Section
+  projects:
+    enable: true
+    title: "Research & Projects"
+    path: "projects"
+    count: 3
+    categories:
+      - "Research"
+      - "Engineering"
+
+  # Timeline (Life Events) Section
+  timeline:
+    enable: true
+    title: "Life Events"
+    path: "life-events"
+    count: 2
+    disableFeaturedImage: true
+
+  # Publications Section
+  publications:
+    enable: true
+    title: "Publications"
+    path: "publications"
+    count: 3
+
+  # Resources Section
+  resources:
+    enable: true
+    title: "Research Resources"
+    path: "resources"
+    count: 3
+    categories:
+      - "Simulation Scripts"
+      - "Tutorials & Guides"
+      - "Handouts & PDFs"
+
+  # Gallery Section
+  gallery:
+    enable: true
+    title: "Photo Gallery"
+    subtitle: "Glimpses from my conferences, research, and travels"
+    path: "gallery"
+
+  # Achievements / Honors & Activities Section
+  achievements:
+    enable: true
+    title: "Honors & Activities"
+    path: "honors-activities"
+    count: 4
+
+  # Wandering Thoughts (Casual Blog) Section
+  wandering_thoughts:
+    enable: true
+    title: "Wandering Thoughts"
+    subtitle: "Reflections, logs, and stories beyond the academic desk"
+    path: "wandering-thoughts"
+    count: 3
+
+  # Contact Section
+  contact:
+    enable: true
+    title: "Contact"
+    content: "My inbox is always open! Feel free to reach out if you have questions, want to collaborate on research, or just want to say hello."
+    btnName: "Send Email"
+    btnLink: "mailto:your-email@ncsu.edu"

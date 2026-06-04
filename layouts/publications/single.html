@@ -1,0 +1,405 @@
+{{ define "head" }}
+<meta name="description" content="Abstract and citation details for: {{ .Title }}">
+<link rel="stylesheet" href="{{ (printf "%scss/single.css" (.Site.Params.staticPath | default "")) | relURL }}">
+<script defer src="{{ (printf "%sfontawesome-6/all-6.4.2.js" (.Site.Params.staticPath | default "")) | relURL }}"></script>
+{{ end }}
+
+{{ define "title" }}
+{{ .Title }} | {{ .Site.Title }}
+{{ end }}
+
+{{ define "main" }}
+<style>
+  .pub-meta-table {
+    border-radius: 8px;
+    overflow: hidden;
+    border: 1px solid rgba(0, 0, 0, 0.08);
+    background-color: var(--background-color) !important;
+    font-size: 0.95rem;
+  }
+  .dark .pub-meta-table {
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    background-color: var(--secondary-background-color-dark) !important;
+  }
+  .pub-meta-table td {
+    padding: 0.75rem 1rem;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+  }
+  .dark .pub-meta-table td {
+    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+  }
+  .pub-meta-table tr:last-child td {
+    border-bottom: none;
+  }
+  .pub-meta-label {
+    font-weight: 600;
+    width: 25%;
+    color: var(--text-color);
+  }
+  .dark .pub-meta-label {
+    color: var(--text-color-dark);
+  }
+  .pub-badge-single {
+    font-size: 0.8rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    padding: 0.3em 0.8em;
+    border-radius: 4px;
+    margin: 0.2rem;
+    display: inline-block;
+  }
+  .pub-badge-journal-single {
+    background-color: rgba(204, 0, 0, 0.1);
+    color: {{ .Site.Params.color.primaryColor | default "#cc0000" }} !important;
+  }
+  .pub-badge-preprint-single {
+    background-color: rgba(71, 85, 105, 0.1);
+    color: var(--text-secondary-color) !important;
+  }
+  .pub-badge-tag-single {
+    background-color: var(--secondary-background-color);
+    color: var(--text-color) !important;
+    text-decoration: none !important;
+  }
+  .dark .pub-badge-tag-single {
+    background-color: var(--secondary-background-color-dark);
+    color: var(--text-color-dark) !important;
+  }
+  .pub-citation-box {
+    background-color: rgba(204, 0, 0, 0.03);
+    border-left: 4px solid {{ .Site.Params.color.primaryColor | default "#cc0000" }};
+    border-radius: 4px;
+    position: relative;
+  }
+  .dark .pub-citation-box {
+    background-color: rgba(204, 0, 0, 0.06);
+  }
+  .pub-copy-btn {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    color: {{ .Site.Params.color.primaryColor | default "#cc0000" }} !important;
+    border: 1px solid {{ .Site.Params.color.primaryColor | default "#cc0000" }} !important;
+    background-color: transparent;
+    padding: 0.2rem 0.6rem;
+    border-radius: 4px;
+    font-size: 0.75rem;
+    font-weight: 500;
+    transition: all 0.2s ease;
+  }
+  .pub-copy-btn:hover {
+    background-color: {{ .Site.Params.color.primaryColor | default "#cc0000" }} !important;
+    color: #ffffff !important;
+  }
+  .single-back-btn {
+    color: {{ .Site.Params.color.primaryColor | default "#cc0000" }} !important;
+    border: 1px solid {{ .Site.Params.color.primaryColor | default "#cc0000" }} !important;
+    font-weight: 500;
+    border-radius: 30px;
+    padding: 0.6rem 1.5rem;
+    transition: all 0.2s ease;
+    background-color: transparent;
+    display: inline-block;
+    text-decoration: none !important;
+  }
+  .single-back-btn:hover {
+    background-color: {{ .Site.Params.color.primaryColor | default "#cc0000" }} !important;
+    color: #ffffff !important;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  }
+  .action-btn {
+    color: {{ .Site.Params.color.primaryColor | default "#cc0000" }} !important;
+    border: 1px solid {{ .Site.Params.color.primaryColor | default "#cc0000" }} !important;
+    font-weight: 500;
+    border-radius: 4px;
+    padding: 0.5rem 1.2rem;
+    transition: all 0.2s ease;
+    background-color: transparent;
+    text-decoration: none !important;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+  .action-btn:hover {
+    background-color: {{ .Site.Params.color.primaryColor | default "#cc0000" }} !important;
+    color: #ffffff !important;
+  }
+  .social-share-bottom {
+    border-top: 1px solid rgba(0, 0, 0, 0.1);
+    border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+    padding: 1.5rem 0;
+    margin: 3rem 0 2rem 0;
+  }
+  .dark .social-share-bottom {
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  }
+  .social-share-bottom a {
+    color: var(--text-color) !important;
+    font-size: 1.5rem;
+    margin: 0 1rem;
+    transition: all 0.2s ease;
+    display: inline-block;
+  }
+  .dark .social-share-bottom a {
+    color: var(--text-color-dark) !important;
+  }
+  .social-share-bottom a:hover {
+    color: {{ .Site.Params.color.primaryColor | default "#cc0000" }} !important;
+    transform: scale(1.15);
+  }
+</style>
+
+<section id="single" class="py-5">
+  <div class="container">
+    <div class="row justify-content-center">
+      <div class="col-sm-12 col-md-10 col-lg-8">
+        <div class="pr-lg-4">
+          <!-- Page Header -->
+          <div class="title mb-4">
+            <h1 class="text-center mb-3">{{ .Title }}</h1>
+            
+            <div class="text-center mb-4">
+              {{ if eq .Params.type "preprint" }}
+              <span class="pub-badge-single pub-badge-preprint-single"><i class="fas fa-file-alt me-1"></i>Preprint</span>
+              {{ else }}
+              <span class="pub-badge-single pub-badge-journal-single"><i class="fas fa-book me-1"></i>Journal Article</span>
+              {{ end }}
+              
+              {{ range .Params.tags }}
+              {{ if ne . "Publication" }}
+              <span class="pub-badge-single pub-badge-tag-single">{{ . }}</span>
+              {{ end }}
+              {{ end }}
+            </div>
+          </div>
+
+          <!-- Authors -->
+          <div class="mb-4 text-center">
+            <h5 class="text-secondary" style="font-weight: 500;">
+              {{ $hasEqual := false }}
+              {{ range $index, $author := .Params.authors }}
+                {{ if $index }}, {{ end }}
+                {{ $isEqual := false }}
+                {{ if $.Params.equal_contribution }}
+                  {{ if or (in $.Params.equal_contribution $author) (in $.Params.equal_contribution (replace (replace $author "Zarif Ahmad Razin Bhuiyan" "Z. A. R. Bhuiyan") "Priom Das" "P. Das")) }}
+                    {{ $isEqual = true }}
+                    {{ $hasEqual = true }}
+                  {{ end }}
+                {{ end }}
+                {{ if eq $author "Zarif Ahmad Razin Bhuiyan" }}
+                  <strong>{{ $author }}</strong>{{ if $isEqual }}*{{ end }}
+                {{ else }}
+                  {{ $author }}{{ if $isEqual }}*{{ end }}
+                {{ end }}
+              {{ end }}
+              {{ if $hasEqual }}
+              <div class="text-muted small mt-2" style="font-size: 0.85rem; font-style: italic;">* Equal contribution / Co-first authors</div>
+              {{ end }}
+            </h5>
+          </div>
+
+          {{ $authors := .Params.authors_ieee }}
+          {{ $hasEqualContribution := false }}
+          {{ if .Params.equal_contribution }}
+            {{ $hasEqualContribution = true }}
+            {{ range .Params.equal_contribution }}
+              {{ $eqName := . }}
+              {{ $authors = replace $authors $eqName (printf "%s*" $eqName) }}
+              {{ if eq $eqName "Priom Das" }}
+                {{ $authors = replace $authors "P. Das" "P. Das*" }}
+              {{ else if eq $eqName "Zarif Ahmad Razin Bhuiyan" }}
+                {{ $authors = replace $authors "Z. A. R. Bhuiyan" "Z. A. R. Bhuiyan*" }}
+              {{ else if eq $eqName "AKM Monjur Morshed" }}
+                {{ $authors = replace $authors "A. K. M. M. Morshed" "A. K. M. M. Morshed*" }}
+              {{ else if eq $eqName "Titan C Paul" }}
+                {{ $authors = replace $authors "T. C. Paul" "T. C. Paul*" }}
+              {{ else if eq $eqName "P. Das" }}
+                {{ $authors = replace $authors "P. Das" "P. Das*" }}
+              {{ else if eq $eqName "Z. A. R. Bhuiyan" }}
+                {{ $authors = replace $authors "Z. A. R. Bhuiyan" "Z. A. R. Bhuiyan*" }}
+              {{ end }}
+            {{ end }}
+          {{ end }}
+          {{ $authors = replace $authors "Z. A. R. Bhuiyan*" "<strong>Z. A. R. Bhuiyan*</strong>" }}
+          {{ $authors = replace $authors "Z. A. R. Bhuiyan" "<strong>Z. A. R. Bhuiyan</strong>" }}
+          {{ $authors = replace $authors "Zarif Ahmad Razin Bhuiyan*" "<strong>Zarif Ahmad Razin Bhuiyan*</strong>" }}
+          {{ $authors = replace $authors "Zarif Ahmad Razin Bhuiyan" "<strong>Zarif Ahmad Razin Bhuiyan</strong>" }}
+
+          <!-- Citation Box (IEEE Format) -->
+          <div class="pub-citation-box p-4 pe-5 mb-4 shadow-sm">
+            <button class="pub-copy-btn" id="copyBtn" onclick="copyCitation()">
+              <i class="far fa-copy me-1"></i>Copy
+            </button>
+            <h6 class="text-muted text-uppercase mb-2" style="font-size: 0.75rem; letter-spacing: 1px;">IEEE Citation</h6>
+            <div id="citationText" class="pub-ieee-citation small">
+              {{ $authors | safeHTML }}, "{{ .Title }}," <em>{{ .Params.journal }}</em>{{ if .Params.volume }}, vol. {{ .Params.volume }}{{ end }}{{ if .Params.issue }}, no. {{ .Params.issue }}{{ end }}{{ if .Params.pages }}, pp. {{ .Params.pages }}{{ end }}, {{ .Date.Format "2006" }}.
+            </div>
+            {{ if $hasEqualContribution }}
+            <div class="text-muted small mt-2" style="font-size: 0.8rem; font-style: italic;">* Equal contribution / Co-first authors</div>
+            {{ end }}
+          </div>
+
+          <!-- Action Buttons -->
+          <div class="d-flex justify-content-center gap-3 flex-wrap mb-5">
+            {{ if .Params.link }}
+            <a href="{{ .Params.link }}" target="_blank" class="action-btn">
+              <i class="fas fa-external-link-alt"></i>Google Scholar Page
+            </a>
+            {{ end }}
+            {{ if .Params.doi }}
+            <a href="https://doi.org/{{ .Params.doi }}" target="_blank" class="action-btn">
+              <i class="fas fa-fingerprint"></i>Publisher DOI
+            </a>
+            {{ end }}
+          </div>
+
+          <!-- Abstract and Metadata -->
+          <div class="mb-5">
+            <h4 class="mb-3" style="font-weight: 600;">Abstract</h4>
+            <div class="lh-lg secondary-font" style="font-size: 1.05rem;">
+              {{ .Content }}
+            </div>
+          </div>
+
+          <!-- Detailed Metadata Table -->
+          <div class="mb-5">
+            <h4 class="mb-3" style="font-weight: 600;">Publication Details</h4>
+            <table class="table pub-meta-table w-100 mb-0">
+              <tbody>
+                {{ if .Params.journal }}
+                <tr>
+                  <td class="pub-meta-label">Journal / Source</td>
+                  <td>{{ .Params.journal }}</td>
+                </tr>
+                {{ end }}
+                {{ if .Params.publisher }}
+                <tr>
+                  <td class="pub-meta-label">Publisher</td>
+                  <td>{{ .Params.publisher }}</td>
+                </tr>
+                {{ end }}
+                {{ if .Params.volume }}
+                <tr>
+                  <td class="pub-meta-label">Volume</td>
+                  <td>{{ .Params.volume }}</td>
+                </tr>
+                {{ end }}
+                {{ if .Params.issue }}
+                <tr>
+                  <td class="pub-meta-label">Issue</td>
+                  <td>{{ .Params.issue }}</td>
+                </tr>
+                {{ end }}
+                {{ if .Params.pages }}
+                <tr>
+                  <td class="pub-meta-label">Pages</td>
+                  <td>{{ .Params.pages }}</td>
+                </tr>
+                {{ end }}
+                <tr>
+                  <td class="pub-meta-label">Publication Date</td>
+                  <td>{{ .Date.Format "January 2, 2006" }}</td>
+                </tr>
+                {{ if .Params.doi }}
+                <tr>
+                  <td class="pub-meta-label">DOI</td>
+                  <td><a href="https://doi.org/{{ .Params.doi }}" target="_blank" class="text-decoration-none" style="color: {{ .Site.Params.color.primaryColor | default "#cc0000" }}">{{ .Params.doi }}</a></td>
+                </tr>
+                {{ end }}
+              </tbody>
+            </table>
+          </div>
+
+          <!-- Social Sharing at the Bottom -->
+          <div class="social-share-bottom text-center">
+            <h6 class="text-uppercase text-muted mb-3" style="font-size: 0.8rem; letter-spacing: 1px;">Share this publication</h6>
+            <ul class="list-inline d-flex justify-content-center align-items-center mb-0 ps-0">
+              <li class="list-inline-item">
+                <a target="_blank" href="https://www.linkedin.com/feed/?shareActive=true&text={{ .Title }} {{ .Permalink | absURL }}" title="Share on LinkedIn">
+                  <i class="fab fa-linkedin"></i>
+                </a>
+              </li>
+              <li class="list-inline-item">
+                <a target="_blank" href="https://twitter.com/share?text={{ .Title }}&url={{ .Permalink | absURL }}&hashtags={{ delimit .Params.tags "," }}" title="Share on Twitter">
+                  <i class="fab fa-twitter"></i>
+                </a>
+              </li>
+              <li class="list-inline-item">
+                <a target="_blank" href="https://api.whatsapp.com/send?text={{ .Title }}: {{ .Permalink | absURL }}" title="Share on WhatsApp">
+                  <i class="fab fa-whatsapp"></i>
+                </a>
+              </li>
+              <li class="list-inline-item">
+                <a target="_blank" href="mailto:?subject={{ .Title }}&amp;body=Check out this publication: {{ .Permalink | absURL }}" title="Share via Email">
+                  <i class="fa fa-envelope"></i>
+                </a>
+              </li>
+            </ul>
+          </div>
+
+          <!-- Navigation Return Button -->
+          <div class="text-center pt-3">
+            {{ $pubSection := site.GetPage "section" (.Site.Params.publications.path | default "publications") }}
+            {{ if $pubSection }}
+            <a href="{{ $pubSection.RelPermalink }}" class="single-back-btn">
+              ← Back to Publications
+            </a>
+            {{ else }}
+            <a href="/publications/" class="single-back-btn">
+              ← Back to Publications
+            </a>
+            {{ end }}
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <button class="p-2 px-3" onclick="topFunction()" id="topScroll">
+    <i class="fas fa-angle-up"></i>
+  </button>
+</section>
+
+{{ if or (.Site.Params.singlePages.scrollprogress.enable | default true) (.Params.enableScrollProgress) }}
+<div class="progress">
+  <div id="scroll-progress-bar" class="progress-bar" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"></div>
+</div>
+<script src="{{ (printf "%sjs/scrollProgressBar.js" (.Site.Params.staticPath | default "")) | relURL }}"></script>
+{{ end }}
+
+<script>
+  // Top scroll logic
+  var topScroll = document.getElementById("topScroll");
+  window.onscroll = function() {scrollFunction()};
+
+  function scrollFunction() {
+    if (document.body.scrollTop > 20 || document.documentElement.scrollTop > 20) {
+      topScroll.style.display = "block";
+    } else {
+      topScroll.style.display = "none";
+    }
+  }
+
+  function topFunction() {
+    document.body.scrollTop = 0;
+    document.documentElement.scrollTop = 0;
+  }
+
+  // Copy Citation logic
+  function copyCitation() {
+    const citationText = document.getElementById("citationText").innerText;
+    navigator.clipboard.writeText(citationText).then(() => {
+      const copyBtn = document.getElementById("copyBtn");
+      copyBtn.innerHTML = '<i class="fas fa-check me-1"></i>Copied!';
+      setTimeout(() => {
+        copyBtn.innerHTML = '<i class="far fa-copy me-1"></i>Copy';
+      }, 2000);
+    }).catch(err => {
+      console.error("Could not copy text: ", err);
+    });
+  }
+</script>
+{{ end }}

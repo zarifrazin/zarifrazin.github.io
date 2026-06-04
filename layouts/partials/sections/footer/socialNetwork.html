@@ -1,0 +1,74 @@
+{{ if .Site.Params.contact.enable | default false }}
+{{- $contact := .Site.Language.Params.contact | default .Site.Params.contact -}}
+<div id="contact" class="footer-contact text-center py-5 px-3">
+    <div class="container">
+        <h4 class="footer-contact-title mb-3">{{ $contact.title | default "Contact" }}</h4>
+        <p class="footer-contact-text mx-auto mb-4" style="max-width: 600px; opacity: 0.85; font-size: 0.95rem; line-height: 1.6;">
+            {{ $contact.content | emojify | markdownify }}
+        </p>
+        <div class="d-flex justify-content-center gap-3 flex-wrap">
+            {{ range .Site.Params.hero.socialLinks.fontAwesomeIcons }}
+            <a href="{{ .url }}"
+                {{ if not (hasPrefix .url "#") }} target="_blank" {{ end }}
+                class="footer-social-icon btn d-flex align-items-center justify-content-center"
+                aria-label="{{ .icon }}"
+            >
+                <i class="{{ .icon }}"></i>
+            </a>
+            {{ end }}
+
+            {{ range .Site.Params.hero.socialLinks.customIcons }}
+            <a href="{{ .url }}"
+                {{ if not (hasPrefix .url "#") }} target="_blank" {{ end }}
+                class="footer-social-icon btn d-flex align-items-center justify-content-center"
+                aria-label="custom-social"
+            >
+                <img src="{{ .icon }}" style="width: 1.2rem; height: 1.2rem;">
+            </a>
+            {{ end }}
+        </div>
+    </div>
+</div>
+{{ end }}
+
+<style>
+.footer-contact {
+    border-top: 1px solid rgba(0, 0, 0, 0.05);
+    background-color: var(--secondary-background-color) !important;
+}
+
+body.dark .footer-contact {
+    border-top: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.footer-contact-title {
+    color: var(--primary-color) !important;
+    font-weight: 700;
+}
+
+.footer-social-icon {
+    color: var(--primary-color) !important;
+    border: 1px solid var(--primary-color) !important;
+    border-radius: 50% !important;
+    width: 2.7rem;
+    height: 2.7rem;
+    padding: 0;
+    font-size: 1.2rem;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1) !important;
+    background-color: transparent !important;
+}
+
+.footer-social-icon:hover {
+    background-color: var(--primary-color) !important;
+    color: var(--background-color) !important;
+    transform: scale(1.15) translateY(-3px);
+    box-shadow: 0 4px 10px rgba(204, 0, 0, 0.25);
+}
+
+body.dark .footer-social-icon:hover {
+    box-shadow: 0 4px 10px rgba(255, 77, 77, 0.35);
+}
+</style>

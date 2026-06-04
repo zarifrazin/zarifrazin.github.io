@@ -1,0 +1,221 @@
+{{ if .Site.Params.publications.enable | default false }}
+{{ $pubPath := .Site.Params.publications.path | default "publications" }}
+{{ $pubSection := site.GetPage "section" $pubPath }}
+{{ $allPubs := slice }}
+{{ if $pubSection }}
+  {{ $allPubs = $pubSection.RegularPages }}
+{{ end }}
+{{ $currentNumOfPubs := len $allPubs }}
+
+{{ if gt $currentNumOfPubs 0 }}
+<style>
+  .pub-section {
+    background-color: var(--secondary-background-color) !important;
+  }
+  .pub-card {
+    transition: transform 0.25s ease, box-shadow 0.25s ease;
+    border-left: 4px solid {{ .Site.Params.color.primaryColor | default "#cc0000" }} !important;
+    border-top: 1px solid rgba(0, 0, 0, 0.05) !important;
+    border-right: 1px solid rgba(0, 0, 0, 0.05) !important;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.05) !important;
+    background-color: var(--background-color) !important;
+  }
+  .dark .pub-card {
+    background-color: var(--secondary-background-color-dark) !important;
+    border-left: 4px solid {{ .Site.Params.color.primaryColor | default "#cc0000" }} !important;
+  }
+  .pub-card:hover {
+    transform: translateX(5px);
+    box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.08) !important;
+  }
+  .pub-ieee-citation {
+    font-size: 0.95rem;
+    line-height: 1.6;
+    color: var(--text-color);
+  }
+  .dark .pub-ieee-citation {
+    color: var(--text-color-dark);
+  }
+  .pub-ieee-citation em {
+    font-weight: 600;
+    color: var(--text-color);
+  }
+  .dark .pub-ieee-citation em {
+    color: var(--text-color-dark);
+  }
+  .pub-badge {
+    font-size: 0.7rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    padding: 0.25em 0.6em;
+    border-radius: 4px;
+  }
+  .pub-badge-journal {
+    background-color: rgba(204, 0, 0, 0.1);
+    color: {{ .Site.Params.color.primaryColor | default "#cc0000" }} !important;
+  }
+  .pub-badge-preprint {
+    background-color: rgba(71, 85, 105, 0.1);
+    color: var(--text-secondary-color) !important;
+  }
+  .pub-badge-featured {
+    background-color: #eab308;
+    color: #000000 !important;
+  }
+  .pub-btn {
+    color: {{ .Site.Params.color.primaryColor | default "#cc0000" }} !important;
+    border-color: {{ .Site.Params.color.primaryColor | default "#cc0000" }} !important;
+    font-weight: 500;
+    transition: all 0.2s ease;
+  }
+  .pub-btn:hover {
+    background-color: {{ .Site.Params.color.primaryColor | default "#cc0000" }} !important;
+    color: #ffffff !important;
+  }
+  .pub-btn-more {
+    background-color: {{ .Site.Params.color.primaryColor | default "#cc0000" }} !important;
+    border-color: {{ .Site.Params.color.primaryColor | default "#cc0000" }} !important;
+    color: #ffffff !important;
+    font-weight: 500;
+    padding: 0.6rem 1.8rem;
+    border-radius: 30px;
+    transition: all 0.2s ease;
+  }
+  .pub-btn-more:hover {
+    filter: brightness(1.15);
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+    transform: scale(1.02);
+    color: #ffffff !important;
+  }
+  .pub-abstract-box {
+    font-size: 0.88rem;
+    color: var(--text-secondary-color);
+    background-color: rgba(0, 0, 0, 0.02);
+    border-left: 2px solid rgba(0, 0, 0, 0.1);
+  }
+  .dark .pub-abstract-box {
+    color: var(--text-secondary-color-dark);
+    background-color: rgba(255, 255, 255, 0.02);
+    border-left: 2px solid rgba(255, 255, 255, 0.1);
+  }
+</style>
+
+<section id="publications" class="pub-section py-5">
+  <div class="container">
+    <div class="h3 text-center text-secondary py-3">
+      {{ .Site.Params.publications.title | default "Publications" }}
+    </div>
+    
+    {{ $featured := where $allPubs "Params.featured" "==" true }}
+    {{ $displayPubs := slice }}
+    {{ if gt (len $featured) 0 }}
+      {{ $displayPubs = $featured }}
+    {{ else }}
+      {{ $displayPubs = $allPubs | first (.Site.Params.publications.count | default 3) }}
+    {{ end }}
+    
+    <div class="row justify-content-center px-3 px-md-5">
+      {{ range $displayPubs }}
+      {{ $id := .File.TranslationBaseName }}
+      <div class="col-12 my-3">
+        <div class="card pub-card shadow-sm p-4">
+          <div class="d-flex align-items-center mb-2 flex-wrap gap-2">
+            {{ if .Params.featured }}
+            <span class="pub-badge pub-badge-featured"><i class="fas fa-star me-1"></i>Featured</span>
+            {{ end }}
+            {{ if eq .Params.type "preprint" }}
+            <span class="pub-badge pub-badge-preprint"><i class="fas fa-file-alt me-1"></i>Preprint</span>
+            {{ else }}
+            <span class="pub-badge pub-badge-journal"><i class="fas fa-book me-1"></i>Journal Article</span>
+            {{ end }}
+            {{ range .Params.tags | first 2 }}
+            <span class="badge bg-secondary opacity-75" style="font-size: 0.7rem;">{{ . }}</span>
+            {{ end }}
+          </div>
+          
+          {{ $authors := .Params.authors_ieee }}
+          {{ $hasEqualContribution := false }}
+          {{ if .Params.equal_contribution }}
+            {{ $hasEqualContribution = true }}
+            {{ range .Params.equal_contribution }}
+              {{ $eqName := . }}
+              {{ $authors = replace $authors $eqName (printf "%s*" $eqName) }}
+              {{ if eq $eqName "Priom Das" }}
+                {{ $authors = replace $authors "P. Das" "P. Das*" }}
+              {{ else if eq $eqName "Zarif Ahmad Razin Bhuiyan" }}
+                {{ $authors = replace $authors "Z. A. R. Bhuiyan" "Z. A. R. Bhuiyan*" }}
+              {{ else if eq $eqName "AKM Monjur Morshed" }}
+                {{ $authors = replace $authors "A. K. M. M. Morshed" "A. K. M. M. Morshed*" }}
+              {{ else if eq $eqName "Titan C Paul" }}
+                {{ $authors = replace $authors "T. C. Paul" "T. C. Paul*" }}
+              {{ else if eq $eqName "P. Das" }}
+                {{ $authors = replace $authors "P. Das" "P. Das*" }}
+              {{ else if eq $eqName "Z. A. R. Bhuiyan" }}
+                {{ $authors = replace $authors "Z. A. R. Bhuiyan" "Z. A. R. Bhuiyan*" }}
+              {{ end }}
+            {{ end }}
+          {{ end }}
+          {{ $authors = replace $authors "Z. A. R. Bhuiyan*" "<strong>Z. A. R. Bhuiyan*</strong>" }}
+          {{ $authors = replace $authors "Z. A. R. Bhuiyan" "<strong>Z. A. R. Bhuiyan</strong>" }}
+          {{ $authors = replace $authors "Zarif Ahmad Razin Bhuiyan*" "<strong>Zarif Ahmad Razin Bhuiyan*</strong>" }}
+          {{ $authors = replace $authors "Zarif Ahmad Razin Bhuiyan" "<strong>Zarif Ahmad Razin Bhuiyan</strong>" }}
+          
+          <div class="pub-ieee-citation mb-3">
+            {{ $authors | safeHTML }},
+            <a href="{{ .RelPermalink }}" class="text-decoration-none" style="color: inherit;">
+              "{{ .Title }},"
+            </a>
+            <em>{{ .Params.journal }}</em>{{ if .Params.volume }}, vol. {{ .Params.volume }}{{ end }}{{ if .Params.issue }}, no. {{ .Params.issue }}{{ end }}{{ if .Params.pages }}, pp. {{ .Params.pages }}{{ end }}, {{ .Date.Format "2006" }}.
+            {{ if $hasEqualContribution }}
+            <div class="text-muted small mt-1" style="font-size: 0.8rem; font-style: italic;">* Equal contribution / Co-first authors</div>
+            {{ end }}
+          </div>
+          
+          <div class="d-flex gap-2 flex-wrap mt-2">
+            <a href="{{ .RelPermalink }}" class="btn btn-outline-primary btn-sm pub-btn">
+              <i class="fas fa-info-circle me-1"></i>Details
+            </a>
+            
+            {{ if .Params.link }}
+            <a href="{{ .Params.link }}" target="_blank" class="btn btn-outline-primary btn-sm pub-btn">
+              <i class="fas fa-external-link-alt me-1"></i>Google Scholar
+            </a>
+            {{ end }}
+            
+            {{ if .Params.doi }}
+            <a href="https://doi.org/{{ .Params.doi }}" target="_blank" class="btn btn-outline-primary btn-sm pub-btn">
+              <i class="fas fa-fingerprint me-1"></i>DOI
+            </a>
+            {{ end }}
+            
+            {{ if .Content }}
+            <button class="btn btn-outline-primary btn-sm pub-btn" type="button" data-bs-toggle="collapse" data-bs-target="#abstract-{{ $id }}" aria-expanded="false" aria-controls="abstract-{{ $id }}">
+              <i class="fas fa-align-left me-1"></i>Abstract
+            </button>
+            {{ end }}
+          </div>
+          
+          {{ if .Content }}
+          <div class="collapse" id="abstract-{{ $id }}">
+            <div class="pub-abstract-box p-3 mt-3 rounded">
+              <strong>Abstract:</strong> {{ .Content }}
+            </div>
+          </div>
+          {{ end }}
+        </div>
+      </div>
+      {{ end }}
+    </div>
+    
+    {{ if gt $currentNumOfPubs (.Site.Params.publications.count | default 3) }}
+    <div class="text-center pt-5">
+      <a href="{{ (printf "/%s/" $pubPath) | relURL }}" class="btn pub-btn-more">
+        View All Publications →
+      </a>
+    </div>
+    {{ end }}
+  </div>
+</section>
+{{ end }}
+{{ end }}

@@ -1,0 +1,155 @@
+{{ if .Site.Params.projects.enable | default false }}
+{{ $projPath := .Site.Params.projects.path | default "projects" }}
+{{ $projSection := site.GetPage "section" $projPath }}
+{{ $allProjs := slice }}
+{{ if $projSection }}
+  {{ $allProjs = $projSection.RegularPages }}
+{{ end }}
+{{ $currentNumOfProjs := len $allProjs }}
+
+{{ if gt $currentNumOfProjs 0 }}
+<style>
+  .proj-card {
+    transition: transform 0.25s ease, box-shadow 0.25s ease;
+    border: 1px solid rgba(0, 0, 0, 0.08);
+    background-color: var(--background-color) !important;
+  }
+  .dark .proj-card {
+    background-color: var(--secondary-background-color-dark) !important;
+    border: 1px solid rgba(255, 255, 255, 0.08);
+  }
+  .proj-card:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 0.75rem 1.5rem rgba(0, 0, 0, 0.12) !important;
+  }
+  .proj-badge {
+    background-color: rgba(204, 0, 0, 0.08);
+    color: {{ .Site.Params.color.primaryColor | default "#cc0000" }} !important;
+    font-size: 0.72rem;
+    font-weight: 600;
+    border-radius: 4px;
+    padding: 0.25em 0.6em;
+    margin-right: 0.4rem;
+    display: inline-block;
+  }
+  .proj-btn-more {
+    background-color: {{ .Site.Params.color.primaryColor | default "#cc0000" }} !important;
+    border-color: {{ .Site.Params.color.primaryColor | default "#cc0000" }} !important;
+    color: #ffffff !important;
+    font-weight: 500;
+    padding: 0.6rem 1.8rem;
+    border-radius: 30px;
+    transition: all 0.2s ease;
+  }
+  .proj-btn-more:hover {
+    filter: brightness(1.15);
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+    transform: scale(1.02);
+    color: #ffffff !important;
+  }
+  .proj-card-link {
+    color: {{ .Site.Params.color.primaryColor | default "#cc0000" }} !important;
+    font-size: 1.1rem;
+    margin-right: 0.75rem;
+    transition: color 0.2s ease;
+  }
+  .proj-card-link:hover {
+    filter: brightness(1.2);
+  }
+  .proj-card-read {
+    color: {{ .Site.Params.color.primaryColor | default "#cc0000" }} !important;
+    border-color: {{ .Site.Params.color.primaryColor | default "#cc0000" }} !important;
+    font-weight: 500;
+    transition: all 0.2s ease;
+  }
+  .proj-card-read:hover {
+    background-color: {{ .Site.Params.color.primaryColor | default "#cc0000" }} !important;
+    color: #ffffff !important;
+  }
+  
+  /* Overrides for theme #projects a color rules */
+  #projects a.proj-btn-more,
+  #projects a.proj-card-read:hover {
+    color: #ffffff !important;
+  }
+  #projects a.proj-card-read {
+    color: {{ .Site.Params.color.primaryColor | default "#cc0000" }} !important;
+    border-color: {{ .Site.Params.color.primaryColor | default "#cc0000" }} !important;
+  }
+  #projects a.proj-card-link {
+    color: {{ .Site.Params.color.primaryColor | default "#cc0000" }} !important;
+  }
+</style>
+
+<section id="projects" class="py-5">
+  <div class="container">
+    <div class="h3 text-center text-secondary py-3">
+      {{ .Site.Params.projects.title | default "Research & Projects" }}
+    </div>
+    
+    {{ $featured := where $allProjs "Params.featured" "==" true }}
+    {{ $displayProjs := slice }}
+    {{ if gt (len $featured) 0 }}
+      {{ $displayProjs = $featured }}
+    {{ else }}
+      {{ $displayProjs = $allProjs | first (.Site.Params.projects.count | default 3) }}
+    {{ end }}
+    
+    <div class="row justify-content-center px-3 px-md-5">
+      {{ range $displayProjs }}
+      <div class="col-lg-4 col-md-6 my-3">
+        <div class="card h-100 proj-card shadow-sm">
+          {{ if .Params.image }}
+          <div class="card-head">
+            <a href="{{ .RelPermalink }}">
+              <img src="{{ .Params.image }}" class="card-img-top" alt="{{ .Title }}" style="object-fit: cover; height: 200px; width: 100%;">
+            </a>
+          </div>
+          {{ end }}
+          <div class="card-body bg-transparent p-4 d-flex flex-column">
+            <div class="mb-2">
+              {{ if .Params.category }}
+              <span class="badge bg-secondary mb-1" style="font-size: 0.7rem; text-transform: uppercase; letter-spacing: 0.5px;">{{ .Params.category }}</span>
+              {{ end }}
+              <div>
+                {{ range .Params.badges }}
+                <span class="proj-badge">{{ . }}</span>
+                {{ end }}
+              </div>
+            </div>
+            
+            <a href="{{ .RelPermalink }}" class="primary-font text-decoration-none" style="color: inherit;">
+              <h5 class="card-title bg-transparent" title="{{ .Title }}" style="font-weight: 600;">{{ .Title }}</h5>
+            </a>
+            
+            <div class="card-text secondary-font mt-2 flex-grow-1">
+              <p class="mb-0">{{ .Summary | truncate 150 }}</p>
+            </div>
+            
+            <div class="mt-4 pt-3 border-top d-flex justify-content-between align-items-center">
+              <div>
+                {{ range .Params.links }}
+                <a href="{{ .url }}" target="_blank" class="proj-card-link" title="Project Link">
+                  <i class="{{ .icon }}"></i>
+                </a>
+                {{ end }}
+              </div>
+              <a href="{{ .RelPermalink }}" class="btn btn-outline-primary btn-sm proj-card-read">Read More</a>
+            </div>
+          </div>
+        </div>
+      </div>
+      {{ end }}
+    </div>
+    
+    {{ if gt $currentNumOfProjs (.Site.Params.projects.count | default 3) }}
+    <div class="text-center pt-5">
+      <a href="{{ (printf "/%s/" $projPath) | relURL }}" class="btn proj-btn-more">
+        View All Projects & Research →
+      </a>
+    </div>
+    {{ end }}
+  </div>
+</section>
+{{ end }}
+{{ end }}

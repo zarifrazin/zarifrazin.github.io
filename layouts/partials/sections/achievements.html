@@ -1,0 +1,88 @@
+{{ $honorsPage := .Site.GetPage "honors-activities" }}
+{{ if and .Site.Params.achievements.enable $honorsPage }}
+<section id="achievements" class="py-5" style="background-color: var(--bg-color);">
+    <div class="container">
+        <!-- Section Header -->
+        <div class="text-center mb-5">
+            <h2 class="section-title" style="font-weight: 800; font-size: 2.2rem; color: var(--text-color);">
+                {{ .Site.Params.achievements.title | default "Honors & Activities" }}
+            </h2>
+            <div class="accent-line mx-auto mb-3" style="width: 60px; height: 3px; background-color: var(--primary-color);"></div>
+        </div>
+
+        <!-- Cards Grid -->
+        <div class="row justify-content-center">
+            {{ range first 4 (where $honorsPage.RegularPages "Params.featured" true) }}
+            <div class="col-lg-3 col-md-6 mb-4 d-flex">
+                <div class="honor-card p-4 text-center w-100 d-flex flex-column" style="background-color: var(--secondary-bg, #ffffff); border-radius: 12px; border: 1px solid rgba(0, 0, 0, 0.05); box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.04); transition: transform 0.25s ease, box-shadow 0.25s ease;">
+                    <!-- Circular Icon Container -->
+                    <div class="honor-icon-container mx-auto mb-3 d-flex align-items-center justify-content-center" style="width: 65px; height: 65px; border-radius: 50%; background-color: rgba(204, 0, 0, 0.06); color: var(--primary-color); border: 2px solid rgba(204, 0, 0, 0.1);">
+                        <i class="{{ .Params.icon | default "fas fa-award" }} fa-2x"></i>
+                    </div>
+
+                    <!-- Title -->
+                    <h5 class="mb-2" style="font-weight: 750; font-size: 1.05rem; color: var(--text-color);">{{ .Title }}</h5>
+                    
+                    <!-- Date Badge -->
+                    <div class="mb-3">
+                        <span class="text-muted small" style="font-weight: 600; font-size: 0.75rem;">
+                            <i class="far fa-calendar-alt me-1"></i> {{ .Params.dateRange }}
+                        </span>
+                    </div>
+
+                    <!-- Content -->
+                    <p class="text-secondary small mb-0 flex-grow-1" style="line-height: 1.5; font-size: 0.82rem;">
+                        {{ .Content }}
+                    </p>
+                </div>
+            </div>
+            {{ end }}
+        </div>
+
+        <!-- View All Button -->
+        <div class="text-center mt-4">
+            <a href="{{ "/honors-activities/" | relURL }}" class="btn btn-outline-danger px-4 py-2" style="border-radius: 30px; font-weight: 600; border-color: var(--primary-color); color: var(--primary-color); transition: all 0.25s ease;">
+                View All Honors & Activities <i class="fas fa-arrow-right ms-1"></i>
+            </a>
+        </div>
+    </div>
+</section>
+
+<!-- Hover Styles -->
+<style>
+    .honor-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 10px 18px -3px rgba(0, 0, 0, 0.07) !important;
+        border-color: rgba(204, 0, 0, 0.15) !important;
+    }
+    .honor-card:hover .honor-icon-container {
+        background-color: var(--primary-color) !important;
+        color: #ffffff !important;
+        transform: scale(1.05);
+        box-shadow: 0 4px 10px rgba(204, 0, 0, 0.2);
+    }
+    .honor-icon-container {
+        transition: all 0.3s ease;
+    }
+    #achievements .btn-outline-danger:hover {
+        background-color: var(--primary-color);
+        color: var(--secondary-color, #ffffff) !important;
+        box-shadow: 0 4px 10px rgba(204, 0, 0, 0.2);
+    }
+    /* Dark Mode specific overrides */
+    body.dark .honor-card {
+        background-color: #1e293b !important;
+        border-color: rgba(255, 255, 255, 0.06) !important;
+    }
+    body.dark .honor-icon-container {
+        background-color: rgba(255, 77, 77, 0.1) !important;
+        color: #ff4d4d !important;
+        border-color: rgba(255, 77, 77, 0.2) !important;
+    }
+    body.dark .honor-card:hover .honor-icon-container {
+        background-color: #ff4d4d !important;
+        color: #0f172a !important;
+        box-shadow: 0 4px 10px rgba(255, 77, 77, 0.3);
+    }
+</style>
+{{ end }}

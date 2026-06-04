@@ -1,0 +1,184 @@
+{{ define "head" }}
+<meta name="description" content="{{ .Title }} of {{ .Site.Title }}">
+<link rel="stylesheet" href="{{ (printf "%scss/list.css" (.Site.Params.staticPath | default "")) | relURL }}" media="all">
+{{ end }}
+
+{{ define "title" }}
+{{ .Title }} | {{ .Site.Title }}
+{{ end }}
+
+{{ define "main" }}
+<style>
+  .timeline-card {
+    transition: transform 0.25s ease, box-shadow 0.25s ease;
+    border: 1px solid rgba(0, 0, 0, 0.08);
+  }
+  .timeline-card:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 0.75rem 1.5rem rgba(0, 0, 0, 0.12) !important;
+  }
+  .badge-timeline {
+    background-color: {{ .Site.Params.color.primaryColor | default "#cc0000" }};
+    color: #ffffff !important;
+    font-size: 0.75rem;
+    font-weight: 600;
+    border-radius: 4px;
+    padding: 0.25em 0.6em;
+    margin-right: 0.4rem;
+    display: inline-block;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+  }
+  .timeline-card-read {
+    color: {{ .Site.Params.color.primaryColor | default "#cc0000" }} !important;
+    border-color: {{ .Site.Params.color.primaryColor | default "#cc0000" }} !important;
+    font-weight: 500;
+    transition: all 0.2s ease;
+  }
+  .timeline-card-read:hover {
+    background-color: {{ .Site.Params.color.primaryColor | default "#cc0000" }} !important;
+    color: #ffffff !important;
+  }
+  .filter-btn {
+    color: {{ .Site.Params.color.primaryColor | default "#cc0000" }} !important;
+    border: 1px solid {{ .Site.Params.color.primaryColor | default "#cc0000" }} !important;
+    font-weight: 500;
+    border-radius: 20px;
+    padding: 0.4rem 1.2rem;
+    transition: all 0.2s ease;
+    margin: 0.25rem;
+    background-color: transparent;
+  }
+  .filter-btn:hover, .filter-btn.active {
+    background-color: {{ .Site.Params.color.primaryColor | default "#cc0000" }} !important;
+    border-color: {{ .Site.Params.color.primaryColor | default "#cc0000" }} !important;
+    color: #ffffff !important;
+  }
+  .search-input {
+    border-radius: 20px;
+    border: 1px solid rgba(0,0,0,0.15);
+    padding: 0.5rem 1.2rem;
+    transition: all 0.2s ease;
+    width: 100%;
+    max-width: 400px;
+  }
+  .search-input:focus {
+    outline: none;
+    border-color: {{ .Site.Params.color.primaryColor | default "#cc0000" }} !important;
+    box-shadow: 0 0 0 0.2rem rgba(204, 0, 0, 0.15);
+  }
+  .card-img-top-list {
+    object-fit: cover;
+    height: 220px;
+    width: 100%;
+  }
+</style>
+
+<div class="container pt-5" id="list-page">
+    <h2 class="text-center pb-2">{{ .Title }}</h2>
+    
+    <!-- Search and Filters Section -->
+    <div class="row justify-content-center my-4">
+        <div class="col-12 col-md-8 text-center mb-3">
+            <input type="text" id="events-search" class="search-input mx-auto" placeholder="🔍 Search life events...">
+        </div>
+        
+        <!-- Get All Unique Tags Dynamically -->
+        {{ $tags := slice }}
+        {{ range .Pages }}
+            {{ range .Params.tags }}
+                {{ $tags = $tags | append . }}
+            {{ end }}
+        {{ end }}
+        {{ $uniqueTags := $tags | uniq }}
+        
+        <div class="col-12 text-center">
+            <button class="btn filter-btn active" data-filter="all">All</button>
+            {{ range $uniqueTags }}
+            <button class="btn filter-btn" data-filter="{{ . | lower }}">{{ . }}</button>
+            {{ end }}
+        </div>
+    </div>
+
+    <!-- Cards Grid -->
+    <div class="row" id="events-grid">
+        {{ range .Pages }}
+        <div class="col-lg-4 col-md-6 my-3 event-card" 
+             data-tags="{{ range .Params.tags }}{{ . | lower }} {{ end }}" 
+             data-title="{{ .Title | lower }}" 
+             data-summary="{{ .Summary | lower }} {{ .Content | lower }}">
+            <div class="card h-100 timeline-card">
+                {{ if .Params.image }}
+                <div class="card-header p-0 border-0">
+                    <a href="{{ .RelPermalink }}">
+                        <img src="{{ .Params.image }}" class="card-img-top card-img-top-list" alt="{{ .Title }}">
+                    </a>
+                </div>
+                {{ end }}
+                <div class="card-body bg-transparent p-4 shadow-sm">
+                    <div class="mb-2">
+                        {{ range .Params.tags }}
+                        <span class="badge-timeline">{{ . }}</span>
+                        {{ end }}
+                    </div>
+                    <a href="{{ .RelPermalink }}" class="primary-font card-title">
+                        <h5 class="card-title bg-transparent" title="{{ .Title }}" style="font-weight: 600;">{{ .Title }}</h5>
+                    </a>
+                    <div class="card-text secondary-font">
+                        <p>{{ .Summary | truncate 220 }}</p>
+                    </div>
+                </div>
+                <div class="mt-auto post-footer bg-transparent py-3 px-4 d-flex justify-content-between align-items-center">
+                    <span class="text-muted small">{{ .Date | time.Format (":date_long" | default "January 2, 2006") }}</span>
+                    <a href="{{ .RelPermalink }}" class="btn btn-outline-primary btn-sm timeline-card-read">{{ .Site.Params.terms.read | default (i18n "read") }}</a>
+                </div>
+            </div>
+        </div>
+        {{ end }}
+    </div>
+</div>
+
+<!-- Real-time Filter & Search Script -->
+<script>
+  document.addEventListener("DOMContentLoaded", function() {
+    const searchInput = document.getElementById("events-search");
+    const filterButtons = document.querySelectorAll(".filter-btn");
+    const cards = document.querySelectorAll(".event-card");
+    let activeTag = "all";
+    let searchQuery = "";
+
+    function filterCards() {
+      cards.forEach(card => {
+        const tagsAttr = card.getAttribute("data-tags") || "";
+        const tags = tagsAttr.split(" ").map(t => t.trim()).filter(t => t.length > 0);
+        const title = card.getAttribute("data-title") || "";
+        const summary = card.getAttribute("data-summary") || "";
+
+        const matchesTag = activeTag === "all" || tags.includes(activeTag.toLowerCase());
+        const matchesSearch = searchQuery === "" || title.includes(searchQuery) || summary.includes(searchQuery);
+
+        if (matchesTag && matchesSearch) {
+          card.style.display = "block";
+        } else {
+          card.style.display = "none";
+        }
+      });
+    }
+
+    searchInput.addEventListener("input", function(e) {
+      searchQuery = e.target.value.toLowerCase().trim();
+      filterCards();
+    });
+
+    filterButtons.forEach(btn => {
+      btn.addEventListener("click", function() {
+        filterButtons.forEach(b => b.classList.remove("active"));
+        btn.classList.add("active");
+        
+        activeTag = btn.getAttribute("data-filter");
+        filterCards();
+      });
+    });
+  });
+</script>
+{{ end }}
