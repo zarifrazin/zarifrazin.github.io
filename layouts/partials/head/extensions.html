@@ -1,6 +1,28 @@
 <!-- fontawesome -->
 <script defer src="{{ (printf "%sfontawesome-6/all-6.4.2.js" (.Site.Params.staticPath | default "")) | relURL }}"></script>
 
+<!-- Uniform "View All" button style across all sections -->
+<style>
+  .btn-view-all {
+    background-color: transparent !important;
+    border: 2px solid {{ .Site.Params.color.primaryColor | default "#cc0000" }};
+    color: {{ .Site.Params.color.primaryColor | default "#cc0000" }} !important;
+    font-weight: 600;
+    padding: 0.55rem 1.8rem;
+    border-radius: 30px;
+    transition: all 0.25s ease;
+    text-decoration: none !important;
+    display: inline-block;
+  }
+  .btn-view-all:hover {
+    background-color: {{ .Site.Params.color.primaryColor | default "#cc0000" }} !important;
+    border-color: {{ .Site.Params.color.primaryColor | default "#cc0000" }};
+    color: #ffffff !important;
+    box-shadow: 0 4px 14px rgba(204, 0, 0, 0.3);
+    transform: scale(1.02);
+  }
+</style>
+
 <!-- Smooth scroll for all in-page anchor links -->
 <script>
   document.addEventListener('DOMContentLoaded', function () {

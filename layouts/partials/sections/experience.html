@@ -48,7 +48,7 @@
 
         <!-- View All Button -->
         <div class="text-center mt-4">
-            <a href="{{ "/experience/" | relURL }}" class="btn btn-outline-danger px-4 py-2" style="border-radius: 30px; font-weight: 600; border-color: var(--primary-color); color: var(--primary-color); transition: all 0.25s ease;">
+            <a href="{{ "/experience/" | relURL }}" class="btn btn-view-all">
                 View All Experience <i class="fas fa-arrow-right ms-1"></i>
             </a>
         </div>
@@ -62,9 +62,9 @@
         box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.06) !important;
         border-color: rgba(204, 0, 0, 0.15) !important;
     }
-    #experience .btn-outline-danger:hover {
-        background-color: var(--primary-color);
-        color: var(--secondary-color, #ffffff) !important;
+    #experience .btn-view-all:hover {
+        background-color: var(--primary-color) !important;
+        color: #ffffff !important;
         box-shadow: 0 4px 10px rgba(204, 0, 0, 0.2);
     }
     /* Dark Mode specific overrides */

@@ -83,7 +83,7 @@
 
 <section id="resources" class="res-section py-5">
   <div class="container">
-    <div class="h3 text-center text-secondary py-3">
+    <div class="h3 fw-bold text-center text-secondary py-3">
       {{ .Site.Params.resources.title | default "Research Resources" }}
     </div>
     
@@ -137,13 +137,11 @@
       {{ end }}
     </div>
     
-    {{ if gt $currentNumOfRes (.Site.Params.resources.count | default 3) }}
     <div class="text-center pt-5">
-      <a href="{{ (printf "/%s/" $resPath) | relURL }}" class="btn res-btn-more">
+      <a href="{{ (printf "/%s/" $resPath) | relURL }}" class="btn btn-view-all">
         View All Resources →
       </a>
     </div>
-    {{ end }}
   </div>
 </section>
 {{ end }}

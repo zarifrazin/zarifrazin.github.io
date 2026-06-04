@@ -210,7 +210,7 @@
     
     {{ if gt $currentNumOfPubs (.Site.Params.publications.count | default 3) }}
     <div class="text-center pt-5">
-      <a href="{{ (printf "/%s/" $pubPath) | relURL }}" class="btn pub-btn-more">
+      <a href="{{ (printf "/%s/" $pubPath) | relURL }}" class="btn btn-view-all">
         View All Publications →
       </a>
     </div>

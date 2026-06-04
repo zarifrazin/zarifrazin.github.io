@@ -68,9 +68,13 @@
   }
   
   /* Overrides for theme #projects a color rules */
-  #projects a.proj-btn-more,
-  #projects a.proj-card-read:hover {
+  #projects a.btn-view-all {
+    color: {{ .Site.Params.color.primaryColor | default "#cc0000" }} !important;
+    background-color: transparent !important;
+  }
+  #projects a.btn-view-all:hover {
     color: #ffffff !important;
+    background-color: {{ .Site.Params.color.primaryColor | default "#cc0000" }} !important;
   }
   #projects a.proj-card-read {
     color: {{ .Site.Params.color.primaryColor | default "#cc0000" }} !important;
@@ -144,7 +148,7 @@
     
     {{ if gt $currentNumOfProjs (.Site.Params.projects.count | default 3) }}
     <div class="text-center pt-5">
-      <a href="{{ (printf "/%s/" $projPath) | relURL }}" class="btn proj-btn-more">
+      <a href="{{ (printf "/%s/" $projPath) | relURL }}" class="btn btn-view-all">
         View All Projects & Research →
       </a>
     </div>

@@ -57,7 +57,7 @@
 <div class="container py-3" id="life-events">
     {{ $recentPostsCount := .Site.Params.timeline.count | default 3 }}
     {{ $recentPosts := $allSectionPosts | first $recentPostsCount }}
-    <div class="h3 text-center text-secondary py-3">
+    <div class="h3 fw-bold text-center text-secondary py-3">
         {{ .Site.Params.timeline.title | default (i18n "recent_posts") }}
     </div>
     <div class="row justify-content-center">
@@ -93,12 +93,10 @@
         {{ end }}
     </div>
     
-    {{ if gt $currentNumOfrecentPosts $recentPostsCount }}
     <div class="text-center pt-5">
-        <a href="{{ $blogsSection.RelPermalink }}" class="btn timeline-btn-more">
+        <a href="{{ $blogsSection.RelPermalink }}" class="btn btn-view-all">
             View All Life Events →
         </a>
     </div>
-    {{ end }}
 </div>
 {{ end }}
