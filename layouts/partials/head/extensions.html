@@ -21,6 +21,10 @@
     box-shadow: 0 4px 14px rgba(204, 0, 0, 0.3);
     transform: scale(1.02);
   }
+  /* Fix: header z-index is 10 in theme, same as gallery badges — raise it above all page content */
+  #profileHeader {
+    z-index: 1000 !important;
+  }
 </style>
 
 <!-- Smooth scroll for all in-page anchor links -->
