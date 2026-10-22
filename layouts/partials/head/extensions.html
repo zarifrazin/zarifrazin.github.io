@@ -27,6 +27,20 @@
   }
 </style>
 
+<!-- Math ($...$ inline, $$...$$ display) on pages with `math: true` in front matter.
+     The theme's own MathJax block uses v2 config with the v3 script, so it never renders $...$. -->
+{{ if .Params.math }}
+<script>
+  window.MathJax = {
+    tex: {
+      inlineMath: [['$', '$'], ['\\(', '\\)']],
+      displayMath: [['$$', '$$'], ['\\[', '\\]']]
+    }
+  };
+</script>
+<script defer src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/tex-mml-chtml.min.js" integrity="sha384-M5jmNxKC9EVnuqeMwRHvFuYUE8Hhp0TgBruj/GZRkYtiMrCRgH7yvv5KY+Owi7TW" crossorigin="anonymous"></script>
+{{ end }}
+
 <!-- Smooth scroll for all in-page anchor links -->
 <script>
   document.addEventListener('DOMContentLoaded', function () {

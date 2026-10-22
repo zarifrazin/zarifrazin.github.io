@@ -159,7 +159,7 @@
         {{ $id := .File.TranslationBaseName }}
         <div class="col-12 my-3 pub-card-col"
              data-tags="{{ range .Params.tags }}{{ . | lower }} {{ end }}"
-             data-type="{{ .Params.type | lower }}"
+             data-type="{{ .Params.pub_type | lower }}"
              data-status="{{ .Params.status | lower }}"
              data-title="{{ .Title | lower }}"
              data-authors="{{ .Params.authors_ieee | lower }}"
@@ -170,7 +170,7 @@
               {{ if .Params.featured }}
               <span class="pub-badge pub-badge-featured"><i class="fas fa-star me-1"></i>Featured</span>
               {{ end }}
-              {{ if eq .Params.type "preprint" }}
+              {{ if eq .Params.pub_type "preprint" }}
               <span class="pub-badge pub-badge-preprint"><i class="fas fa-file-alt me-1"></i>Preprint</span>
               {{ else }}
               <span class="pub-badge pub-badge-journal"><i class="fas fa-book me-1"></i>Journal Article</span>
@@ -218,16 +218,21 @@
               {{ end }}
             </div>
             
+            {{- /* Abstract is the text above a <!--more--> line, if there is one; the rest (news, story) shows on the paper page */ -}}
+            {{ $abstract := .Content }}{{ if strings.Contains .RawContent "<!--more-->" }}{{ $abstract = .Summary }}{{ end }}
             <div class="d-flex gap-2 flex-wrap mt-2">
-              <a href="{{ .RelPermalink }}" class="btn btn-outline-primary btn-sm pub-btn">
-                <i class="fas fa-info-circle me-1"></i>Details
-              </a>
-              
-              {{ if .Params.link }}
-              <a href="{{ .Params.link }}" target="_blank" class="btn btn-outline-primary btn-sm pub-btn">
-                <i class="fas fa-external-link-alt me-1"></i>Google Scholar
-              </a>
+              {{ if $abstract }}
+              <button class="btn btn-outline-primary btn-sm pub-btn" type="button" data-bs-toggle="collapse" data-bs-target="#abstract-{{ $id }}" aria-expanded="false" aria-controls="abstract-{{ $id }}">
+                <i class="fas fa-align-left me-1"></i>Abstract
+              </button>
               {{ end }}
+              
+              {{- /* link is skipped when it only repeats the DOI button */ -}}
+              {{ with .Params.link }}{{ if not (in . "doi.org/") }}
+              <a href="{{ . }}" target="_blank" class="btn btn-outline-primary btn-sm pub-btn">
+                <i class="fas fa-external-link-alt me-1"></i>{{ if in . "scholar.google" }}Google Scholar{{ else }}View Paper{{ end }}
+              </a>
+              {{ end }}{{ end }}
               
               {{ if .Params.doi }}
               <a href="https://doi.org/{{ .Params.doi }}" target="_blank" class="btn btn-outline-primary btn-sm pub-btn">
@@ -235,17 +240,15 @@
               </a>
               {{ end }}
               
-              {{ if .Content }}
-              <button class="btn btn-outline-primary btn-sm pub-btn" type="button" data-bs-toggle="collapse" data-bs-target="#abstract-{{ $id }}" aria-expanded="false" aria-controls="abstract-{{ $id }}">
-                <i class="fas fa-align-left me-1"></i>Abstract
-              </button>
-              {{ end }}
+              <a href="{{ .RelPermalink }}" class="btn btn-outline-primary btn-sm pub-btn">
+                <i class="fas fa-info-circle me-1"></i>Details
+              </a>
             </div>
             
-            {{ if .Content }}
+            {{ if $abstract }}
             <div class="collapse" id="abstract-{{ $id }}">
               <div class="pub-abstract-box p-3 mt-3 rounded">
-                <strong>Abstract:</strong> {{ .Content }}
+                <strong>Abstract:</strong> {{ $abstract }}
               </div>
             </div>
             {{ end }}

@@ -1,0 +1,17 @@
+{{- /*
+  Shared home-page rule for every section:
+    - every page with featured: true is shown, however many there are
+    - if fewer than `count` (default 3) are featured, the newest other pages
+      fill in until `count` pages are shown
+  Featured pages come first, then the fill-ins.
+  Usage: {{ $pages := partial "featured-or-latest.html" (dict "pages" $section.RegularPages "count" .Site.Params.<section>.count) }}
+*/ -}}
+{{- /* int: YAML numbers are unsigned, so 3 - 4 would wrap around instead of going negative */ -}}
+{{- $count := int (.count | default 3) -}}
+{{- $featured := where .pages "Params.featured" true -}}
+{{- $result := $featured -}}
+{{- if lt (len $featured) $count -}}
+  {{- $others := first (sub $count (len $featured)) (.pages | complement $featured) -}}
+  {{- $result = $featured | append $others -}}
+{{- end -}}
+{{- return $result -}}

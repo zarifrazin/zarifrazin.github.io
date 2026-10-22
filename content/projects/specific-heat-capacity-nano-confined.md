@@ -10,14 +10,15 @@ links:
   - icon: "fas fa-link"
     url: "https://doi.org/10.1016/j.molliq.2023.122115"
 category: "Research"
-featured: true
+featured: false
+math: true
 ---
 
 ### Project Overview
-This project focuses on the interfacial thermal transport and thermodynamic behavior of Nano-Confined Liquids (NCL) under solid copper walls. Equilibrium Molecular Dynamics (EMD) simulations are carried out to investigate the effects of wall wettability and nanogap thickness on the constant volume molar heat capacity of liquid argon.
+This project studies the heat capacity of nano-confined liquid (NCL): liquid argon entrapped between two solid copper walls at 100 K. Equilibrium Molecular Dynamics (EMD) simulations are used to investigate how wall wettability and nanogap thickness affect the constant volume molar heat capacity of the liquid.
 
 ### Key Contributions
-- Performed extensive EMD simulations of argon confined between solid copper walls using Lennard-Jones (LJ) potentials.
-- Analyzed the change in molar heat capacity ($C_v$) as a function of wall hydrophobic/hydrophilic interaction parameters and nanogap spacing.
-- Discovered that hydrophobic walls show distinct shifts in critical nanogap thicknesses at which maximum heat capacities occur.
+- Performed EMD simulations of liquid argon confined between solid copper walls, using the Lennard-Jones (LJ) potential, for nanogap thicknesses from 0.585 nm to 5.85 nm.
+- Varied the solid-liquid interaction potential to make the walls hydrophobic or hydrophilic, and evaluated its effect on the molar heat capacity ($C_v$).
+- Found that as the walls become more hydrophobic, both the maximum heat capacity and the critical nanogap thickness (the gap at which that maximum occurs) decrease.
 - Published the findings in the **Journal of Molecular Liquids** (Volume 383, 2023, 122115) as a Q1 journal article with an impact factor of 6.0.

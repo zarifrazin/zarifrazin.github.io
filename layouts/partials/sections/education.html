@@ -8,11 +8,16 @@
                 {{ .Site.Params.education.title | default "Education" }}
             </h2>
             <div class="accent-line mx-auto mb-3" style="width: 60px; height: 3px; background-color: var(--primary-color);"></div>
+            {{ with .Site.Params.education.subtitle }}
+            <p class="text-muted" style="font-size: 1.05rem;">
+                {{ . }}
+            </p>
+            {{ end }}
         </div>
 
         <!-- Academic Cards Container -->
         <div class="row justify-content-center">
-            {{ range first 4 $educationPage.RegularPages }}
+            {{ range partial "featured-or-latest.html" (dict "pages" $educationPage.RegularPages "count" .Site.Params.education.count) }}
             <div class="col-lg-5 col-md-6 mb-4 px-3 d-flex">
                 <div class="education-card p-4 w-100" style="background-color: var(--secondary-bg, #ffffff); border-radius: 12px; border: 1px solid rgba(0, 0, 0, 0.05); border-left: 4px solid var(--primary-color) !important; box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.04); transition: transform 0.25s ease, box-shadow 0.25s ease; position: relative;">
                     <!-- Degree Info -->

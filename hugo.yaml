@@ -27,43 +27,78 @@ markup:
   goldmark:
     renderer:
       unsafe: true
+    extensions:
+      # Leave $...$ / $$...$$ untouched so Markdown doesn't mangle math (e.g. _ in subscripts)
+      passthrough:
+        enable: true
+        delimiters:
+          inline:
+            - ['$', '$']
+            - ['\(', '\)']
+          block:
+            - ['$$', '$$']
+            - ['\[', '\]']
 
 Menus:
+  # params.section: the section under params below; its tab hides when that section has enable: false
   main:
     - name: "About"
       url: "/#about"
       weight: 5
+      params:
+        section: about
     - name: "Publications"
       url: "/#publications"
       weight: 10
+      params:
+        section: publications
     - name: "Projects"
       url: "/#projects"
       weight: 15
+      params:
+        section: projects
     - name: "Experience"
       url: "/#experience"
       weight: 20
+      params:
+        section: experience
     - name: "Education"
       url: "/#education"
       weight: 25
+      params:
+        section: education
     - name: "Honors & Activities"
       url: "/#achievements"
       weight: 30
+      params:
+        section: achievements
     - name: "Resources"
       url: "/#resources"
       weight: 35
+      params:
+        section: resources
     - name: "Life Events"
       url: "/#life-events"
       weight: 40
+      params:
+        section: timeline
     - name: "Gallery"
       url: "/#gallery"
       weight: 45
+      params:
+        section: gallery
     - name: "Wandering Thoughts"
       url: "/#wandering-thoughts"
       weight: 50
+      params:
+        section: wandering_thoughts
 
 params:
+  # Home-page sections (all of them follow the same rule):
+  #   - every post with featured: true is shown, however many there are
+  #   - if fewer than `count` are featured, the newest other posts fill in up to `count`
   title: "Zarif Ahmad Razin Bhuiyan"
-  description: "PhD Student in Mechanical Engineering at North Carolina State University"
+  description: "Mechanical Engineer and Researcher"
   favicon: "/fav.png"
 
   # Whether the fade animations on the home page will be enabled
@@ -120,8 +155,8 @@ params:
     enable: true
     intro: "Hi, my name is"
     title: "Zarif Ahmad Razin Bhuiyan"
-    subtitle: "PhD Student in Mechanical Engineering at NC State University"
-    content: "Greetings and welcome to my personal website! I'm Zarif. As a Mechanical Engineer, I completed my Bachelor's degree from Bangladesh University of Engineering and Technology (BUET) in May 2022. I'm currently pursuing a PhD in Mechanical Engineering at North Carolina State University (NCSU) in Raleigh, NC. My research focuses on interfacial thermal transport at the nano-scale using Molecular Dynamics (MD) simulations. Before joining NCSU, I served as a Lecturer at Sonargaon University (SU) and a Teaching Assistant (TA) at BUET."
+    subtitle: "Mechanical Engineer and Researcher"
+    content: "Hi, I'm Zarif. I am a Graduate Research Assistant and PhD student in the Department of Mechanical and Aerospace Engineering at North Carolina State University. I conduct research on nano-scale thermal transport using Molecular Dynamics simulations in Dr. Jun Liu's lab. Previously, I obtained my undergraduate degree from Bangladesh University of Engineering and Technology (BUET)."
     button:
       enable: true
       name: "Get in Touch"
@@ -133,24 +168,29 @@ params:
     socialLinks:
       fontAwesomeIcons:
         - icon: fab fa-github
-          url: "https://github.com/abzarif"
+          url: "https://github.com/zarifrazin"
         - icon: fab fa-linkedin
           url: "https://www.linkedin.com/in/zarif-razin"
         - icon: fab fa-facebook
           url: "http://fb.com/zarif.razin"
+        # From abzarif.com "Find Me"
+        - icon: fas fa-graduation-cap
+          url: "https://scholar.google.com/citations?user=HhNqllUAAAAJ&hl=en"
         - icon: fas fa-envelope
-          url: "mailto:your-email@ncsu.edu"
+          url: "mailto:zrazinb@ncsu.edu"
 
   # About Section
   about:
     enable: true
     title: "About Me"
     content: |-
-      I am a passionate Mechanical Engineering researcher and educator. Though I was born in the Cumilla district, my childhood was spent in the village of Kalipur in the Chandpur district, situated on the tranquil banks of the magnificent Meghna River.
+      Greetings and welcome to my personal website! I'm Zarif, a Mechanical Engineering researcher and educator. Though I was born in the Cumilla district, my childhood was spent in the village of Kalipur in the Chandpur district, situated on the tranquil banks of the magnificent Meghna River.
 
-      My academic and professional journey has taken me from BUET in Bangladesh to NC State University in the USA. I have served both as a Lecturer at Sonargaon University (SU) and a Teaching Assistant at BUET, which has solidified my commitment to academic excellence and research.
+      I completed my Bachelor's degree in Mechanical Engineering from Bangladesh University of Engineering and Technology (BUET) in May 2022, and I am currently pursuing a PhD in Mechanical Engineering at NC State University (NCSU) in the USA. Before joining NCSU, I served as a Lecturer at Sonargaon University (SU) and a Teaching Assistant (TA) at BUET.
+
+      Through this website, I hope to share my journey, insights, and experiences with you as we explore new frontiers and learn from one another.
     skills:
-      enable: true
+      enable: false
       title: "Here are a few areas and technologies I work with:"
       items:
         - "Molecular Dynamics (MD) / LAMMPS"
@@ -171,8 +211,9 @@ params:
   education:
     enable: true
     title: "Education"
+    subtitle: "I have pursued my passion for learning and honing my skills through a strong educational foundation. Here is a glimpse of my educational background:"
     path: "education"
-    count: 4
+    count: 2
 
   # Projects Section
   projects:
@@ -189,8 +230,8 @@ params:
     enable: true
     title: "Life Events"
     path: "life-events"
-    count: 2
-    disableFeaturedImage: true
+    count: 3
+    disableFeaturedImage: false
 
   # Publications Section
   publications:
@@ -209,6 +250,7 @@ params:
       - "Simulation Scripts"
       - "Tutorials & Guides"
       - "Handouts & PDFs"
+      - "Skills Showcase"
 
   # Gallery Section
   gallery:
@@ -222,20 +264,26 @@ params:
     enable: true
     title: "Honors & Activities"
     path: "honors-activities"
-    count: 4
+    count: 3
 
   # Wandering Thoughts (Casual Blog) Section
   wandering_thoughts:
-    enable: true
+    enable: false
     title: "Wandering Thoughts"
     subtitle: "Reflections, logs, and stories beyond the academic desk"
     path: "wandering-thoughts"
     count: 3
 
+  # File previews ({{< preview src="..." >}} in any .md file)
+  # open: true = previews start expanded; false = visitors click "Show preview".
+  # A page can override this with `preview_open: true/false` in its front matter.
+  preview:
+    open: false
+
   # Contact Section
   contact:
     enable: true
     title: "Contact"
-    content: "My inbox is always open! Feel free to reach out if you have questions, want to collaborate on research, or just want to say hello."
+    content: "My inbox is always open! Feel free to reach out if you have questions, want to collaborate on research, or just want to say hello.<br>✉️ [zrazinb@ncsu.edu](mailto:zrazinb@ncsu.edu) · ✉️ [abzarifrazin@gmail.com](mailto:abzarifrazin@gmail.com)"
     btnName: "Send Email"
-    btnLink: "mailto:your-email@ncsu.edu"
+    btnLink: "mailto:zrazinb@ncsu.edu"

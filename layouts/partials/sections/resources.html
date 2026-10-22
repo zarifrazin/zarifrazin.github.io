@@ -87,13 +87,7 @@
       {{ .Site.Params.resources.title | default "Research Resources" }}
     </div>
     
-    {{ $featured := where $allRes "Params.featured" "==" true }}
-    {{ $displayRes := slice }}
-    {{ if gt (len $featured) 0 }}
-      {{ $displayRes = $featured }}
-    {{ else }}
-      {{ $displayRes = $allRes | first (.Site.Params.resources.count | default 3) }}
-    {{ end }}
+    {{ $displayRes := partial "featured-or-latest.html" (dict "pages" $allRes "count" .Site.Params.resources.count) }}
     
     <div class="row justify-content-center px-3 px-md-5">
       {{ range $displayRes }}

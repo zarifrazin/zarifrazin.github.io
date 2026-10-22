@@ -91,13 +91,7 @@
       {{ .Site.Params.projects.title | default "Research & Projects" }}
     </div>
     
-    {{ $featured := where $allProjs "Params.featured" "==" true }}
-    {{ $displayProjs := slice }}
-    {{ if gt (len $featured) 0 }}
-      {{ $displayProjs = $featured }}
-    {{ else }}
-      {{ $displayProjs = $allProjs | first (.Site.Params.projects.count | default 3) }}
-    {{ end }}
+    {{ $displayProjs := partial "featured-or-latest.html" (dict "pages" $allProjs "count" .Site.Params.projects.count) }}
     
     <div class="row justify-content-center px-3 px-md-5">
       {{ range $displayProjs }}

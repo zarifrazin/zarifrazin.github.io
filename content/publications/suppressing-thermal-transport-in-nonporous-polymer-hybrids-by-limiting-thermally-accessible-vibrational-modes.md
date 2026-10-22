@@ -28,14 +28,14 @@ authors:
   - "Yanfei Xu"
 authors_ieee: "H. Worden, M. Chandra, Y. Zhou, Z. A. R. Bhuiyan, M. Cheng, K. Munusamy, D. Nghiem, W. Hu, W. Yan, S. Wu, R. Li, J. Zhang, A. Chatterji, S. Zhang, I. N. Ivanov, J. Chen, J. C. Lasseter, M. Jin, D. Abitagaoglu, Q. Tu, T. Emrick, J. Liu, and Y. Xu"
 journal: "Materials Horizons"
-volume: ""
-issue: ""
-pages: ""
+volume: "13"
+issue: "12"
+pages: "5876-5887"
 publisher: "Royal Society of Chemistry"
-doi: ""
-link: "https://scholar.google.com/citations?view_op=view_citation&hl=en&user=HhNqllUAAAAJ&citation_for_view=HhNqllUAAAAJ:2osOgNQ5qMEC"
+doi: "10.1039/d6mh00633g"
+link: "https://doi.org/10.1039/d6mh00633g"
 featured: false
-type: "journal"
+pub_type: "journal"
 status: "published"
 tags:
   - "Polymers"
@@ -43,4 +43,4 @@ tags:
   - "Thermal Transport"
 ---
 
-Achieving low thermal conductivity in nonporous polymer materials without compromising mechanical integrity remains a longstanding challenge. Conventional strategies, such as introducing porosity, are inherently limited in dense systems. Here, we demonstrate that thermal transport in polymer–organic filler hybrids is closely associated with the engineered availability of thermally accessible vibrational modes, rather than individual interfacial resistance or porosity. Using PU/organic filler hybrids as a model system, we show that incorporating rigid organic motifs shifts the vibrational density of states toward higher frequencies, where vibrational modes are weakly thermally populated at ambient conditions. This limits the number of heat-carrying channels, leading to suppressed thermal conductivity despite negligible individual interfacial resistance (~10⁻⁹ m² K W⁻¹). These findings provide initial evidence that
+Achieving low thermal conductivity in nonporous polymer materials without compromising mechanical integrity remains a longstanding challenge. Conventional strategies, such as introducing porosity, are inherently limited in dense systems. Here, we demonstrate that thermal transport in polymer–organic filler hybrids is closely associated with the engineered availability of thermally accessible vibrational modes, rather than individual interfacial resistance or porosity. Using PU/organic filler hybrids as a model system, we show that incorporating rigid organic motifs shifts the vibrational density of states toward higher frequencies, where vibrational modes are weakly thermally populated at ambient conditions. This limits the number of heat-carrying channels, leading to suppressed thermal conductivity despite negligible individual interfacial resistance (~10⁻⁹ m² K W⁻¹). These findings provide initial evidence that vibrational mode engineering may offer a promising molecular-level route for reducing thermal conductivity in dense polymer-organic hybrid systems.

@@ -10,14 +10,14 @@ links:
   - icon: "fas fa-link"
     url: "https://doi.org/10.1016/j.commatsci.2024.113232"
 category: "Research"
-featured: true
+featured: false
 ---
 
 ### Project Overview
-This project details the molecular-level investigation of the thermal properties of liquid argon entrapped within a hybrid wettability domain. Using LAMMPS, we ran Molecular Dynamics (MD) simulations to examine the localized heat capacity and thermal conductivity trends of nano-confined liquid (NCL).
+This project investigates how hybrid wettability affects the thermal properties of nano-confined liquid (NCL): a thin film (about 3 nm) of liquid argon entrapped between two solid copper surfaces at 100 K. Using LAMMPS, we ran Molecular Dynamics (MD) simulations to calculate the constant volume molar heat capacity and the thermal conductivity of the confined liquid.
 
 ### Key Contributions
-- Designed copper surfaces with hybrid wettability layouts by modulating the solid-liquid interaction parameters spatially across a single interface.
-- Checked thermal conductivity and heat capacity changes relative to homogeneous hydrophobic/hydrophilic bounds.
-- Demonstrated that NCL heat capacity under hybrid wettability is significantly higher than bulk values (e.g. bulk value of 20 J/mol K vs confined hybrid value).
-- Published findings in **Computational Materials Science** (Volume 244, 2024, 113232) as a Q1 journal article with an impact factor of 3.1.
+- Created hybrid wettability surfaces by applying two different wettability factors (μ) to the same copper surface, varying the solid-liquid interaction parameter.
+- Calculated the constant volume molar heat capacity and the thermal conductivity of the nano-confined liquid.
+- Showed that the heat capacity of liquid argon confined between hybrid wettability surfaces exceeds its bulk value of 20 J/mol·K.
+- Published the findings in **Computational Materials Science** (Volume 244, 2024, 113232) as a Q1 journal article with an impact factor of 3.1.

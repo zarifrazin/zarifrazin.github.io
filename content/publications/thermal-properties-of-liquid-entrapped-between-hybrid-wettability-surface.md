@@ -16,10 +16,10 @@ volume: "244"
 issue: ""
 pages: "113232"
 publisher: "Elsevier"
-doi: ""
-link: "https://scholar.google.com/citations?view_op=view_citation&hl=en&user=HhNqllUAAAAJ&citation_for_view=HhNqllUAAAAJ:u-x6o8ySG0sC"
+doi: "10.1016/j.commatsci.2024.113232"
+link: "https://doi.org/10.1016/j.commatsci.2024.113232"
 featured: false
-type: "journal"
+pub_type: "journal"
 status: "published"
 tags:
   - "Molecular Dynamics"
@@ -31,4 +31,6 @@ tags:
   - "Wettability"
 ---
 
-Molecular dynamics (MD) simulations were conducted to investigate the impact of hybrid wettability on thermal properties, specifically focusing on the constant volume molar heat capacity and thermal conductivity of Nano-confined liquid (NCL). The simulation domain, maintained at a temperature of 100 K, consisted of a∼ 3 nm—thin film of liquid argon entrapped between two solid copper surfaces with hybrid wettability. Hybrid wettability surfaces were produced by varying the solid–liquid interaction parameter and applying two different wettability factors (μ) to the same surface. In this study, key findings pertaining to the influence of hybrid wettability on heat capacity and thermal conductivity include:(i) The heat capacity of liquid confined within hybrid wettability surfaces surpasses the heat capacity of the liquid in its bulk form. The heat capacity of bulk argon liquid is 20 J/mol k, but the liquid confined in the Hybrid I
+Molecular dynamics (MD) simulations were conducted to investigate the impact of hybrid wettability on thermal properties, specifically focusing on the constant volume molar heat capacity and thermal conductivity of Nano-confined liquid (NCL). The simulation domain, maintained at a temperature of 100 K, consisted of a∼ 3 nm—thin film of liquid argon entrapped between two solid copper surfaces with hybrid wettability. Hybrid wettability surfaces were produced by varying the solid–liquid interaction parameter and applying two different wettability factors (μ) to the same surface. In this study, key findings pertaining to the influence of hybrid wettability on heat capacity and thermal conductivity include: (i) The heat capacity of liquid confined within hybrid wettability surfaces surpasses the heat capacity of the liquid in its bulk form. …
+
+[Read the full abstract on the publisher's website](https://doi.org/10.1016/j.commatsci.2024.113232)

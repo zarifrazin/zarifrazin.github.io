@@ -1,5 +1,6 @@
 ---
 title: "Memories by the Banks of Meghna River"
+draft: true # hidden from the live site until reviewed
 date: 2026-05-15
 summary: "Reflecting on childhood days spent in Kalipur, Chandpur on the peaceful banks of the Meghna River."
 tags:

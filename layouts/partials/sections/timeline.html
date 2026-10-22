@@ -55,8 +55,7 @@
 </style>
 
 <div class="container py-3" id="life-events">
-    {{ $recentPostsCount := .Site.Params.timeline.count | default 3 }}
-    {{ $recentPosts := $allSectionPosts | first $recentPostsCount }}
+    {{ $recentPosts := partial "featured-or-latest.html" (dict "pages" $allSectionPosts "count" .Site.Params.timeline.count) }}
     <div class="h3 fw-bold text-center text-secondary py-3">
         {{ .Site.Params.timeline.title | default (i18n "recent_posts") }}
     </div>

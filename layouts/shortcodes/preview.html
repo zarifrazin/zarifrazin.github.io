@@ -1,0 +1,72 @@
+{{- /*
+  Inline file preview, usable in any .md file:
+    {{< preview src="/documents/report.pdf" >}}
+    {{< preview src="/documents/slides.pptx" title="Thesis defence slides" open="true" height="500" >}}
+
+  - PDF: shown with the browser's built-in viewer.
+  - PowerPoint / Word / Excel: shown with Microsoft's Office Online viewer, which
+    fetches the file from the live site, so it only works after the site is
+    deployed (and for files up to ~10 MB).
+  - Shown open or behind a "Show preview" button, decided in this order:
+      1. open="true" / open="false" on this one preview
+      2. preview_open: true / false in the page's front matter (all previews on the page)
+      3. params.preview.open in hugo.yaml (site-wide default)
+    A collapsed file only loads when opened, so pages with many files stay fast.
+*/ -}}
+{{- $src := .Get "src" -}}
+{{- $ext := lower (path.Ext $src) -}}
+{{- $title := .Get "title" | default (path.Base $src) -}}
+{{- $height := .Get "height" | default "600" -}}
+{{- $open := site.Params.preview.open | default false -}}
+{{- with .Page.Params.preview_open }}{{ $open = . }}{{ end -}}
+{{- if eq .Page.Params.preview_open false }}{{ $open = false }}{{ end -}}
+{{- with .Get "open" }}{{ $open = eq . "true" }}{{ end -}}
+{{- $isOffice := in (slice ".ppt" ".pptx" ".doc" ".docx" ".xls" ".xlsx") $ext -}}
+{{- $viewer := "" -}}
+{{- if eq $ext ".pdf" -}}
+  {{- $viewer = $src | relURL -}}
+{{- else if $isOffice -}}
+  {{- $viewer = printf "https://view.officeapps.live.com/op/embed.aspx?src=%s" (urlquery ($src | absURL)) -}}
+{{- end -}}
+{{- $icon := cond (eq $ext ".pdf") "fa-file-pdf" (cond (in (slice ".ppt" ".pptx") $ext) "fa-file-powerpoint" (cond (in (slice ".doc" ".docx") $ext) "fa-file-word" (cond (in (slice ".xls" ".xlsx") $ext) "fa-file-excel" "fa-file"))) -}}
+
+{{- if not (.Page.Store.Get "previewAssets") -}}
+{{- .Page.Store.Set "previewAssets" true -}}
+<style>
+  .file-preview { border: 1px solid rgba(0,0,0,0.1); border-radius: 10px; margin: 1rem 0; background: var(--secondary-background-color, #f1f5f9); overflow: hidden; }
+  .file-preview > summary { cursor: pointer; padding: 0.75rem 1rem; font-weight: 600; display: flex; align-items: center; gap: 0.6rem; list-style: none; }
+  .file-preview > summary::-webkit-details-marker { display: none; }
+  .file-preview > summary .fp-icon { color: var(--primary-color, #cc0000); font-size: 1.2rem; }
+  .file-preview > summary .fp-toggle { margin-left: auto; font-size: 0.8rem; font-weight: 500; opacity: 0.7; }
+  .file-preview[open] > summary .fp-toggle::after { content: "Hide preview"; }
+  .file-preview:not([open]) > summary .fp-toggle::after { content: "Show preview"; }
+  .file-preview .fp-frame { width: 100%; border: 0; display: block; background: #fff; }
+  .file-preview .fp-actions { display: flex; gap: 0.5rem; flex-wrap: wrap; padding: 0.6rem 1rem; border-top: 1px solid rgba(0,0,0,0.08); font-size: 0.9rem; }
+  .file-preview .fp-note { padding: 1rem; font-size: 0.9rem; }
+</style>
+<script>
+  // Load each preview only when it is first opened
+  document.addEventListener('toggle', function (e) {
+    var d = e.target;
+    if (!d.classList || !d.classList.contains('file-preview') || !d.open) return;
+    var f = d.querySelector('iframe[data-src]');
+    if (f) { f.src = f.getAttribute('data-src'); f.removeAttribute('data-src'); }
+  }, true);
+</script>
+{{- end }}
+
+<details class="file-preview"{{ if $open }} open{{ end }}>
+  <summary><i class="fas {{ $icon }} fp-icon"></i>{{ $title }}<span class="fp-toggle"></span></summary>
+  {{- if and $isOffice hugo.IsServer }}
+  <div class="fp-note">Office previews use Microsoft's online viewer, which can't reach your computer. This preview works on the live site; use <strong>Open</strong> below meanwhile.</div>
+  {{- else if $viewer }}
+  <iframe class="fp-frame" {{ if $open }}src{{ else }}data-src{{ end }}="{{ $viewer }}" style="height: {{ $height }}px;" title="{{ $title }}" loading="lazy"></iframe>
+  {{- else }}
+  <div class="fp-note">No preview is available for this file type.</div>
+  {{- end }}
+  <div class="fp-actions">
+    <a href="{{ $src | relURL }}" target="_blank" rel="noopener"><i class="fas fa-external-link-alt me-1"></i>Open</a>
+    <span aria-hidden="true">·</span>
+    <a href="{{ $src | relURL }}" download><i class="fas fa-download me-1"></i>Download</a>
+  </div>
+</details>

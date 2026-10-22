@@ -14,7 +14,7 @@
         <div class="row justify-content-center">
             <div class="col-lg-9 col-md-11">
                 <div class="position-relative ps-4 border-start border-2" style="border-color: rgba(204, 0, 0, 0.3) !important;">
-                    {{ range first 3 (where $experiencePage.RegularPages "Params.featured" true) }}
+                    {{ range partial "featured-or-latest.html" (dict "pages" $experiencePage.RegularPages "count" .Site.Params.experience.count) }}
                     <div class="position-relative mb-5 experience-timeline-item">
                         <!-- Timeline Bullet Node -->
                         <div class="position-absolute timeline-dot" style="left: -33px; top: 4px; width: 16px; height: 16px; border-radius: 50%; background-color: var(--primary-color); border: 4px solid var(--secondary-bg, #ffffff); box-shadow: 0 0 0 3px rgba(204, 0, 0, 0.15); z-index: 5;"></div>

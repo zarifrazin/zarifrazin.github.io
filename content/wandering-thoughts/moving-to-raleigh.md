@@ -1,5 +1,6 @@
 ---
 title: "Dhaka to Raleigh: A New Academic Chapter"
+draft: true # hidden from the live site until reviewed
 date: 2026-06-04
 summary: "Reflections on transitioning from lecturing in Dhaka to pursuing a PhD at NC State University in Raleigh, North Carolina."
 tags:

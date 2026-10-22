@@ -4,7 +4,7 @@ school: "Bangladesh University of Engineering and Technology (BUET)"
 schoolUrl: "http://www.buet.ac.bd"
 dateRange: "May 2022"
 date: 2022-05-01
-featured: true
+featured: false
 ---
-* **Institution**: Graduated from the premier engineering institution in Bangladesh.
+* **Department**: Department of Mechanical Engineering.
 * **Location**: Dhaka, Bangladesh.

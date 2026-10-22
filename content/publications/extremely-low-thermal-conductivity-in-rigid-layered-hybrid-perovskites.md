@@ -1,0 +1,48 @@
+---
+title: "Extremely low thermal conductivity in rigid layered hybrid perovskites"
+date: 2026-09-18
+publishDate: "2026-09-18"
+authors:
+  - "Ziqi Wang"
+  - "Liang Yan"
+  - "Ankit Negi"
+  - "Qingxuan Wang"
+  - "Zarif Ahmad Razin Bhuiyan"
+  - "Xiaowei Zhong"
+  - "Andrew H. Comstock"
+  - "Subhrangsu Mukherjee"
+  - "Yeonju Yu"
+  - "Cong Yang"
+  - "Aryan Jouneghaninaseri"
+  - "Shehzad Khan"
+  - "Tyler Wang"
+  - "Saqlain Raza"
+  - "Jun Hu"
+  - "Yoji Nabei"
+  - "Xiaokun Gu"
+  - "Hezhu Shao"
+  - "Mengxia Liu"
+  - "Qing Tu"
+  - "Harald Ade"
+  - "Jun Zhou"
+  - "Dali Sun"
+  - "Wei You"
+  - "Jun Liu"
+authors_ieee: "Z. Wang, L. Yan, A. Negi, Q. Wang, Z. A. R. Bhuiyan, X. Zhong, A. H. Comstock, S. Mukherjee, Y. Yu, C. Yang, A. Jouneghaninaseri, S. Khan, T. Wang, S. Raza, J. Hu, Y. Nabei, X. Gu, H. Shao, M. Liu, Q. Tu, H. Ade, J. Zhou, D. Sun, W. You, and J. Liu"
+journal: "Science Advances"
+volume: "12"
+issue: "38"
+pages: "eaee5269"
+publisher: "American Association for the Advancement of Science (AAAS)"
+doi: "10.1126/sciadv.aee5269"
+link: "https://doi.org/10.1126/sciadv.aee5269"
+featured: false
+pub_type: "journal"
+status: "published"
+tags:
+  - "Perovskites"
+  - "Publication"
+  - "Thermal Transport"
+---
+
+Materials with exceptionally low thermal conductivity are desirable for thermal insulation and waste heat recovery. While foams and aerogels boast ultralow thermal conductivities akin to air, lack of mechanical stiffness in these soft materials necessitates a paradigm shift in materials design that can offer thermal insulation and mechanical rigidity simultaneously. Here, we show that spun-cast layered hybrid organic-inorganic perovskite thin films, azobenzene ethyl ammonium lead iodides, exhibit a record-low thermal conductivity, down to ∼0.04 watts per meter per kelvin at room temperature, while maintaining mechanical rigidity with an elastic modulus of 7.7 gigapascals that surpasses that of most plastics, foams, and aerogels. This unusual combination of ultralow thermal conductivity and high mechanical rigidity is attributed to the specially engineered organic cations in the layered structure. Our finding highlights the potential of molecular engineering in hybrid layered structures to push the extreme of thermal insulation in dense, rigid solids.

@@ -161,7 +161,7 @@
             <h1 class="text-center mb-3">{{ .Title }}</h1>
             
             <div class="text-center mb-4">
-              {{ if eq .Params.type "preprint" }}
+              {{ if eq .Params.pub_type "preprint" }}
               <span class="pub-badge-single pub-badge-preprint-single"><i class="fas fa-file-alt me-1"></i>Preprint</span>
               {{ else }}
               <span class="pub-badge-single pub-badge-journal-single"><i class="fas fa-book me-1"></i>Journal Article</span>
@@ -243,11 +243,12 @@
 
           <!-- Action Buttons -->
           <div class="d-flex justify-content-center gap-3 flex-wrap mb-5">
-            {{ if .Params.link }}
-            <a href="{{ .Params.link }}" target="_blank" class="action-btn">
-              <i class="fas fa-external-link-alt"></i>Google Scholar Page
+            {{- /* link is skipped when it only repeats the DOI button */ -}}
+            {{ with .Params.link }}{{ if not (in . "doi.org/") }}
+            <a href="{{ . }}" target="_blank" class="action-btn">
+              <i class="fas fa-external-link-alt"></i>{{ if in . "scholar.google" }}Google Scholar Page{{ else }}View Paper{{ end }}
             </a>
-            {{ end }}
+            {{ end }}{{ end }}
             {{ if .Params.doi }}
             <a href="https://doi.org/{{ .Params.doi }}" target="_blank" class="action-btn">
               <i class="fas fa-fingerprint"></i>Publisher DOI
@@ -256,12 +257,23 @@
           </div>
 
           <!-- Abstract and Metadata -->
+          {{- /* Text above a <!--more--> line is the abstract; anything below it (news, story) gets its own section */ -}}
+          {{ $hasStory := strings.Contains .RawContent "<!--more-->" }}
           <div class="mb-5">
             <h4 class="mb-3" style="font-weight: 600;">Abstract</h4>
             <div class="lh-lg secondary-font" style="font-size: 1.05rem;">
-              {{ .Content }}
+              {{ if $hasStory }}{{ .Summary }}{{ else }}{{ .Content }}{{ end }}
             </div>
           </div>
+
+          {{ if $hasStory }}
+          <div class="mb-5">
+            <h4 class="mb-3" style="font-weight: 600;">{{ .Params.story_title | default "Behind the Paper" }}</h4>
+            <div class="lh-lg secondary-font" style="font-size: 1.05rem;">
+              {{ .ContentWithoutSummary }}
+            </div>
+          </div>
+          {{ end }}
 
           <!-- Detailed Metadata Table -->
           <div class="mb-5">

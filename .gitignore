@@ -9,3 +9,4 @@ resources/_gen/
 .DS_Store
 Thumbs.db
 *Zone.Identifier
+__pycache__/

@@ -12,7 +12,7 @@
 
         <!-- Cards Grid -->
         <div class="row justify-content-center">
-            {{ range first 4 (where $honorsPage.RegularPages "Params.featured" true) }}
+            {{ range partial "featured-or-latest.html" (dict "pages" $honorsPage.RegularPages "count" .Site.Params.achievements.count) }}
             <div class="col-lg-3 col-md-6 mb-4 d-flex">
                 <div class="honor-card p-4 text-center w-100 d-flex flex-column" style="background-color: var(--secondary-bg, #ffffff); border-radius: 12px; border: 1px solid rgba(0, 0, 0, 0.05); box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.04); transition: transform 0.25s ease, box-shadow 0.25s ease;">
                     <!-- Circular Icon Container -->

@@ -15,7 +15,7 @@
 
         <!-- Thoughts Grid Preview -->
         <div class="row justify-content-center">
-            {{ range first 3 $thoughts.RegularPages }}
+            {{ range partial "featured-or-latest.html" (dict "pages" $thoughts.RegularPages "count" .Site.Params.wandering_thoughts.count) }}
             <div class="col-lg-4 col-md-6 mb-4">
                 <div class="thought-card h-100 d-flex flex-column" style="transition: transform 0.3s ease, box-shadow 0.3s ease; border-radius: 12px; overflow: hidden; background-color: var(--bg-color, #ffffff); box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05); border: 1px solid rgba(0,0,0,0.06); padding: 24px;">
                     <!-- Date & Reading Time -->
