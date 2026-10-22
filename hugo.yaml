@@ -98,7 +98,13 @@ params:
   #   - every post with featured: true is shown, however many there are
   #   - if fewer than `count` are featured, the newest other posts fill in up to `count`
   title: "Zarif Ahmad Razin Bhuiyan"
-  description: "Mechanical Engineer and Researcher"
+  # Search engines: shown as the home page title and the snippet under it in Google
+  description: "Zarif Ahmad Razin Bhuiyan (AB Zarif Razin) is a PhD student and Graduate Research Assistant in Mechanical Engineering at NC State University, studying nanoscale thermal transport with molecular dynamics."
+  seo:
+    homeTitle: "Zarif Ahmad Razin Bhuiyan | PhD Researcher, NC State University"
+  # Default preview image when a page is shared or shown in search
+  images:
+    - "/images/profile.jpg"
   favicon: "/fav.png"
 
   # Whether the fade animations on the home page will be enabled

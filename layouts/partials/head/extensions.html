@@ -1,6 +1,32 @@
 <!-- fontawesome -->
 <script defer src="{{ (printf "%sfontawesome-6/all-6.4.2.js" (.Site.Params.staticPath | default "")) | relURL }}"></script>
 
+<!-- SEO: the one official address of this page (abzarif.com, www and github.io all serve the same site) -->
+<link rel="canonical" href="{{ .Permalink }}">
+
+{{- /* SEO: tell search engines who this site is about (schema.org Person), on the home page only */ -}}
+{{ if .IsHome }}
+{{- $sameAs := slice "https://orcid.org/0000-0002-2977-2392" -}}
+{{- range .Site.Params.hero.socialLinks.fontAwesomeIcons -}}
+  {{- if hasPrefix .url "http" }}{{ $sameAs = $sameAs | append .url }}{{ end -}}
+{{- end -}}
+{{- $person := dict
+  "@context" "https://schema.org"
+  "@type" "Person"
+  "name" "Zarif Ahmad Razin Bhuiyan"
+  "alternateName" (slice "AB Zarif Razin" "Zarif Razin" "Z. A. R. Bhuiyan")
+  "url" .Site.BaseURL
+  "image" ("/images/profile.jpg" | absURL)
+  "jobTitle" "Graduate Research Assistant"
+  "description" .Site.Params.description
+  "affiliation" (dict "@type" "CollegeOrUniversity" "name" "North Carolina State University" "url" "https://www.ncsu.edu")
+  "alumniOf" (slice (dict "@type" "CollegeOrUniversity" "name" "Bangladesh University of Engineering and Technology" "url" "https://www.buet.ac.bd") (dict "@type" "CollegeOrUniversity" "name" "North Carolina State University" "url" "https://www.ncsu.edu"))
+  "knowsAbout" (slice "Molecular Dynamics" "Nanoscale Thermal Transport" "Heat Transfer" "LAMMPS" "Mechanical Engineering")
+  "sameAs" $sameAs
+-}}
+<script type="application/ld+json">{{ $person | jsonify | safeJS }}</script>
+{{ end }}
+
 <!-- Uniform "View All" button style across all sections -->
 <style>
   .btn-view-all {
