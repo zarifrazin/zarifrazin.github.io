@@ -45,7 +45,7 @@ TITLE_MATCH_THRESHOLD = 0.9
 CROSSREF_TYPES = ['journal-article', 'posted-content', 'proceedings-article', 'book-chapter']
 
 USER_AGENT = 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36'
-CROSSREF_USER_AGENT = 'zarifrazin.github.io publication sync (https://zarifrazin.github.io)'
+CROSSREF_USER_AGENT = 'abzarif.com publication sync (https://abzarif.com)'
 
 # Keyword dictionary for auto-tagging
 TAG_KEYWORDS = {
