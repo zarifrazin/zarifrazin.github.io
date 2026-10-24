@@ -8,7 +8,7 @@ tags:
   - "FEM"
   - "MATLAB"
 pdf: "documents/skills/matlab/fem-2d-truss-code.pdf"
-featured: true
+featured: false
 preview_open: true
 ---
 

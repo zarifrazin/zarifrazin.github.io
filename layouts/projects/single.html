@@ -143,18 +143,24 @@
 
           <!-- Featured Image -->
           {{ if .Params.image }}
-          <div class="featured-image mb-4">
-            <img class="img-fluid mx-auto d-block rounded shadow-sm" src="{{ .Params.image }}" alt="{{ .Title }}" style="max-height: 400px; object-fit: cover; width: 100%;">
+          <div class="featured-image mb-4 text-center">
+            <img class="img-fluid mx-auto d-block rounded shadow-sm" src="{{ .Params.image }}" alt="{{ .Title }}" style="max-height: 420px; object-fit: contain; width: auto; max-width: 100%;">
+            {{ if .Params.image_caption }}
+            <p class="text-muted small mt-2"><em>{{ .Params.image_caption }}</em></p>
+            {{ end }}
           </div>
           {{ end }}
 
           <!-- Action Buttons -->
           <div class="d-flex justify-content-center gap-3 flex-wrap mb-5">
             {{ range .Params.links }}
-              {{ $title := "Project Link" }}
-              {{ if eq .icon "fas fa-link" }}{{ $title = "DOI / Publisher" }}{{ end }}
-              {{ if eq .icon "fas fa-external-link-alt" }}{{ $title = "Project Website" }}{{ end }}
-              {{ if eq .icon "fab fa-google-drive" }}{{ $title = "Google Drive" }}{{ end }}
+              {{ $title := .name | default "Project Link" }}
+              {{ if not .name }}
+                {{ if eq .icon "fas fa-link" }}{{ $title = "DOI / Publisher" }}{{ end }}
+                {{ if eq .icon "fas fa-external-link-alt" }}{{ $title = "Project Website" }}{{ end }}
+                {{ if eq .icon "fab fa-google-drive" }}{{ $title = "Google Drive" }}{{ end }}
+                {{ if or (eq .icon "fab fa-github") (eq .icon "fas fa-github") }}{{ $title = "GitHub Code" }}{{ end }}
+              {{ end }}
               <a href="{{ .url }}" target="_blank" class="action-btn">
                 <i class="{{ .icon }} me-1"></i>{{ $title }}
               </a>
