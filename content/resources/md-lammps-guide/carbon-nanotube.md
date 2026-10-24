@@ -8,6 +8,7 @@ learn:
   - "Loops in LAMMPS: `variable ... loop`, `label`, `next`, `jump`"
   - "Moving atoms with `displace_atoms`"
   - "Immediate evaluation `$(...)` versus a formula variable"
+image: "/videos/md-lammps-guide/cnt-poster.jpg"
 ---
 
 {{< guide-video src="/videos/md-lammps-guide/cnt.mp4" alt="A carbon nanotube rendered in OVITO, a hollow cylinder of carbon atoms in a honeycomb pattern" caption="The goal: a (15, 0) zigzag carbon nanotube, 11.7 Å in diameter, made by rolling up a graphene sheet." >}}

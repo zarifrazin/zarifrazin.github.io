@@ -1,0 +1,38 @@
+{{- /*
+  Override of Hugo's internal helper that picks a page's preview image for
+  social shares (og:image, twitter:image). Same as Hugo's version, plus:
+  pages that only set `image:` (singular, as the theme's projects and life
+  events do) use it instead of falling back to the site-wide profile photo.
+*/ -}}
+{{- $imgs := slice }}
+{{- $imgParams := .Params.images }}
+{{- if and (not $imgParams) .Params.image }}
+  {{- $imgParams = slice .Params.image }}
+{{- end }}
+{{- $resources := .Resources.ByType "image" -}}
+{{- if not $imgParams }}
+  {{- $featured := $resources.GetMatch "*feature*" -}}
+  {{- if not $featured }}{{ $featured = $resources.GetMatch "{*cover*,*thumbnail*}" }}{{ end -}}
+  {{- with $featured }}
+    {{- $imgs = $imgs | append (dict "Image" . "RelPermalink" .RelPermalink "Permalink" .Permalink) }}
+  {{- end }}
+{{- end }}
+{{- if and (not $imgParams) (not $imgs) }}
+  {{- with site.Params.images }}
+    {{- $imgParams = first 1 . }}
+  {{- end }}
+{{- end }}
+{{- range $imgParams }}
+  {{- $img := . }}
+  {{- $url := urls.Parse $img }}
+  {{- if eq $url.Scheme "" }}
+    {{- with $resources.GetMatch $img -}}
+      {{- $imgs = $imgs | append (dict "Image" . "RelPermalink" .RelPermalink "Permalink" .Permalink) }}
+    {{- else }}
+      {{- $imgs = $imgs | append (dict "RelPermalink" (relURL $img) "Permalink" (absURL $img)) }}
+    {{- end }}
+  {{- else }}
+    {{- $imgs = $imgs | append (dict "RelPermalink" $img "Permalink" $img) }}
+  {{- end }}
+{{- end }}
+{{- return $imgs }}

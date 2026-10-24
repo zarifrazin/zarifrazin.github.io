@@ -7,6 +7,7 @@ learn:
   - "Describing a crystal as **lattice vectors + basis atoms**"
   - "The three building commands: `lattice`, `region`, `create_atoms`"
   - "Sizing the box from variables so it fits a whole number of unit cells"
+image: "/videos/md-lammps-guide/graphene-poster.jpg"
 ---
 
 {{< guide-video src="/videos/md-lammps-guide/graphene.mp4" alt="A 20 by 20 cell graphene sheet rendered in OVITO, a honeycomb of carbon atoms" caption="The goal: a 1600-atom graphene sheet (20 × 20 unit cells) at 300 K." >}}

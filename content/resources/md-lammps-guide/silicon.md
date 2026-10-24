@@ -8,6 +8,7 @@ learn:
   - "Building a supercell and exporting a LAMMPS data file with OVITO"
   - "Loading a structure with `read_data`"
   - "The Stillinger–Weber potential for silicon"
+image: "/videos/md-lammps-guide/silicon-poster.jpg"
 ---
 
 {{< guide-video src="/videos/md-lammps-guide/silicon.mp4" alt="A cube of 1000 silicon atoms in the diamond structure rendered in OVITO" caption="The goal: a 5 × 5 × 5 supercell of diamond-cubic silicon (1000 atoms) at 300 K." >}}

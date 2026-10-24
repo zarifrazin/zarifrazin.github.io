@@ -6,6 +6,7 @@ summary: "A practice problem that uses everything from the guide: build a thin f
 learn:
   - "Planning a structure on paper before writing commands"
   - "Combining the building blocks from earlier chapters on your own"
+image: "/images/resources/md-lammps-guide/nano-confined-argon.jpg"
 ---
 
 You now have every tool you need to build a new system from scratch. Here is one to practice on: a **nano-confined liquid**, a few nanometers of liquid argon trapped between two copper plates. It's a classic setup for studying how liquids behave near walls, for example how they conduct and store heat.

@@ -9,6 +9,7 @@ learn:
   - "Mixing EAM and Lennard-Jones potentials; tuning how much a liquid likes a surface"
   - "A non-periodic direction, a reflecting wall, and a frozen layer of atoms"
   - "Why a thermostat should only act on atoms that are free to move"
+image: "/videos/md-lammps-guide/droplet-poster.jpg"
 ---
 
 When a droplet sits on a surface, its shape tells you how strongly the liquid is attracted to the solid. A liquid that "likes" the surface spreads out into a flat puddle (**hydrophilic**), and one that doesn't beads up (**hydrophobic**). The angle where the liquid surface meets the solid, the **contact angle**, measures this. MD lets you compute it directly from the atoms. In this chapter we build the classic setup: liquid argon on a copper plate, surrounded by its own vapor.

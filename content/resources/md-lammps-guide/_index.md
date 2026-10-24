@@ -13,6 +13,7 @@ featured: true
 type: "md-guide"
 math: true
 cascade:
+  image: "/videos/md-lammps-guide/hbn-stanene-poster.jpg"
   type: "md-guide"
   math: true
 downloads:
@@ -26,6 +27,7 @@ downloads:
   - name: "Code notes (PDF)"
     path: "/documents/md-lammps-guide/code-notes.pdf"
     icon: "fa-file-pdf"
+image: "/videos/md-lammps-guide/hbn-stanene-poster.jpg"
 ---
 
 Molecular dynamics (MD) simulates how atoms move. You place atoms in a box, choose a model for the forces between them (the **interatomic potential**), and then step Newton's equations of motion forward in time, a fraction of a femtosecond per step. From those trajectories you can measure things like temperature, pressure, structure, wetting, and heat flow.

@@ -7,6 +7,7 @@ learn:
   - "Assigning atom types per basis atom: `create_atoms ... basis M itype`"
   - "A buckled lattice with a third lattice vector `a3`"
   - "Hybrid potentials: Tersoff within each layer, Lennard-Jones between them"
+image: "/videos/md-lammps-guide/hbn-stanene-poster.jpg"
 ---
 
 {{< guide-video src="/videos/md-lammps-guide/hbn-stanene.mp4" alt="A buckled stanene layer of tin atoms stacked above a flat hexagonal boron nitride layer" caption="The goal: a stanene (Sn) layer stacked on hexagonal boron nitride (hBN), 788 atoms in total." >}}
