@@ -1,0 +1,10 @@
+{{- /* Cards linking to every chapter of the current guide section, in weight order */ -}}
+<div class="guide-roadmap">
+  {{- range $i, $p := .Page.Pages.ByWeight }}
+  <a href="{{ $p.RelPermalink }}">
+    <span class="num">Chapter {{ add $i 1 }}</span>
+    <span class="t">{{ $p.Params.short | default $p.Title }}</span>
+    <span class="s">{{ $p.Params.summary }}</span>
+  </a>
+  {{- end }}
+</div>

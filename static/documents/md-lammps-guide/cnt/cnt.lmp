@@ -1,0 +1,85 @@
+# Initial setup for Carbon Nanotube (CNT) simulation in LAMMPS
+variable project string cnt
+variable t equal 298 # temperature (K)
+
+log           ${project}_log.txt
+units           metal # grams/mole, angstroms, ps, eV, K, bars, gm/cm^3
+dimension      3
+boundary       p p p
+atom_style     atomic
+
+# Building the graphene structure
+
+variable l equal 1.42 # bond length in angstroms
+variable m  equal 15 # number of unit cells in along cicumferential direction
+variable n  equal 20 # number of unit cells along axial direction
+variable L equal $(sqrt(3)*v_l*v_m) # length of the graphene sheet
+variable W equal $(3*v_l*v_n) # width of the graphene sheet
+
+region box block 0 ${L} -10 10 0 ${W} units box
+create_box 1 box
+mass 1 12.01 # mass of carbon atom
+
+# Generating graphene sheet
+lattice custom ${l} &
+  a1 $(sqrt(3)) 0.0 0.0 &
+  a2 0.0 1.0 0.0 &
+  a3 0.0 0.0 3.0 &
+  basis 0.0 0.0 0.0 &
+  basis $(1/2) 0.0 $(1/6) &
+  basis $(1/2) 0.0 $(1/2) &
+  basis 0.0 0.0 $(2/3)
+region graphenebox block 0 ${L} -0.1 0.1 0 ${W} units box
+create_atoms 1 region graphenebox
+
+# creating cnt from graphene
+
+variable R  equal ${L}/(2*3.14159265359)  # radius of the CNT
+variable cx  equal (xlo+xhi)/2.0 # center of the CNT
+variable cy  equal (ylo+yhi)/2.0 # center of the CNT
+
+# setting up loop for displacing atoms
+variable natoms  equal count(all)
+variable id loop ${natoms}
+label loop
+
+group anatom id ${id}
+variable x equal xcm(anatom,x)
+variable y equal xcm(anatom,y)
+
+variable theta  equal $(v_x*2*3.1416/lx)
+
+variable newx equal $(v_R*cos(v_theta)+v_cx)
+variable newy equal $(v_R*sin(v_theta)+v_cy)
+
+variable dx  equal $(v_newx-v_x)
+variable dy  equal $(v_newy-v_y)
+
+displace_atoms anatom move v_dx v_dy 0.0 units box
+group anatom delete
+next id
+jump SELF loop
+
+velocity all create $t 12345 dist gaussian
+
+# Definition of interatomic potential
+pair_style tersoff/table
+pair_coeff * * SiCGe.tersoff C
+
+# Simulation settings
+timestep 0.00025
+neighbor 3.0 bin
+neigh_modify delay 0 every 1 check yes
+
+min_style cg
+minimize 1e-10 1e-12 10000 100000
+
+
+write_data ${project}_data.txt
+
+# Equilibration
+fix 1 all nvt temp $t $t $(100.0*dt)
+thermo 100
+thermo_style custom step temp etotal press
+dump 1 all custom 100 ${project}_dump.txt id type x y z vx vy vz
+run 2000

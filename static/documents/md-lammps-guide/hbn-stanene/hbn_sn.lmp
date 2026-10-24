@@ -1,0 +1,73 @@
+################### Initialization ###################
+variable project string hbn_sn
+variable t equal 300.0 # temperature (K)
+
+log           ${project}_log.txt
+units           metal # grams/mole, angstroms, ps, eV, K, bars, gm/cm^3
+dimension      3
+boundary       p p p
+atom_style     atomic
+
+# Building the hbn-sn structure
+
+variable L equal 40.0# length of the hbn-sn sheet
+variable W equal 40.0 # width of the hbn-sn sheet
+
+region box block 0 ${L} 0 ${W} -10 10 units box
+create_box 3 box
+mass 1 10.811 # mass of boron atom
+mass 2 14.007 # mass of nitrogen atom
+mass 3 118.71 # mass of tin atom
+
+# building hbn
+variable lbn equal 1.45 # bond length in angstroms
+lattice custom 1 &
+  a1 $(sqrt(3)*v_lbn) 0.0 0.0 &
+  a2 0.0 $(3.0*v_lbn) 0.0 &
+  a3 0.0 0.0 1.0 &
+  basis 0.0 0.0 0.0 &
+  basis $(1/2) $(1/6) 0.0 &
+  basis $(1/2) $(1/2) 0.0 &
+  basis 0.0 $(2/3) 0.0
+region bnbox block 0 ${L} 0 ${W} -0.5 0.0  units box
+create_atoms 1 region bnbox basis 2 2 basis 4 2
+
+# building sn
+variable lsn equal 2.69 # planar bond length in angstroms
+variable hsn equal 0.88 # buckling height of sn atom in angstroms
+lattice custom 1 &
+  a1 $(sqrt(3)*v_lsn) 0.0 0.0 &
+  a2 0.0 $(3.0*v_lsn) 0.0 &
+  a3 0.0 0.0 $(-2*v_hsn) &
+  basis 0.0 0.0 0.0 &
+  basis $(1/2) $(1/6) $(1/2) &
+  basis $(1/2) $(1/2) 0.0 &
+  basis 0.0 $(2/3) $(1/2)
+region snbox block 0 ${L} 0 ${W} 3.0 5.0 units box
+create_atoms 3 region snbox
+velocity all create $t 12345 dist gaussian
+
+# Definition of interatomic potential
+pair_style hybrid tersoff tersoff lj/cut 10.0
+pair_coeff * * tersoff 1 BNC.tersoff B N NULL
+pair_coeff * * tersoff 2 Sn.tersoff NULL NULL Sn
+pair_coeff	1 3 lj/cut 0.0138 4.23 10
+pair_coeff	2 3 lj/cut 0.00857 4.026 10
+
+# Simulation settings
+timestep 0.00025
+neighbor 3.0 bin
+neigh_modify delay 0 every 1 check yes
+
+min_style cg
+minimize 1e-10 1e-12 10000 100000
+
+
+write_data ${project}_data.txt
+
+# Equilibration
+fix 1 all nvt temp $t $t $(100.0*dt)
+thermo 100
+thermo_style custom step temp etotal press
+dump 1 all custom 100 ${project}_dump.txt id type x y z vx vy vz
+run 20000

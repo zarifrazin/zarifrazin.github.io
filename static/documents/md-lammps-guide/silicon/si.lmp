@@ -1,0 +1,38 @@
+################### Initialization ###################
+variable project string silicon
+variable t equal 300.0 # temperature (K)
+
+log           ${project}_log.txt
+units           metal # grams/mole, angstroms, ps, eV, K, bars, gm/cm^3
+dimension      3
+boundary       p p p
+atom_style     atomic
+
+# loading the silicone structure
+
+read_data si_supercell.data
+
+velocity all create $t 12345 dist gaussian
+
+# Definition of interatomic potential
+pair_style sw
+pair_coeff * * Si.sw Si
+
+# Simulation settings
+timestep 0.00025
+neighbor 3.0 bin
+neigh_modify delay 0 every 1 check yes
+
+min_style cg
+minimize 1e-10 1e-12 10000 100000
+
+
+write_data ${project}_data.txt
+
+# Equilibration
+fix 1 all nvt temp $t $t $(100.0*dt)
+thermo 100
+thermo_style custom step temp etotal press
+dump 1 all custom 100 ${project}_dump.txt id type x y z vx vy vz
+run 20000
+

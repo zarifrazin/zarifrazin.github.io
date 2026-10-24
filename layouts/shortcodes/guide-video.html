@@ -1,0 +1,16 @@
+{{- /*
+  Silent looping simulation movie with a caption:
+    {{< guide-video src="/videos/md-lammps-guide/graphene.mp4" caption="..." >}}
+  A poster image with the same name plus "-poster.jpg" is used if it exists.
+*/ -}}
+{{- $src := .Get "src" -}}
+{{- $poster := replaceRE `\.mp4$` "-poster.jpg" $src -}}
+<figure>
+  <video autoplay muted loop playsinline controls preload="metadata"
+         {{ if fileExists (path.Join "static" $poster) }}poster="{{ $poster | relURL }}"{{ end }}
+         style="width: 100%; max-width: {{ .Get "width" | default "760" }}px; border-radius: 8px; background: #fff;"
+         aria-label="{{ .Get "alt" | default (.Get "caption") | plainify }}">
+    <source src="{{ $src | relURL }}" type="video/mp4">
+  </video>
+  {{ with .Get "caption" }}<figcaption>{{ . | markdownify }}</figcaption>{{ end }}
+</figure>

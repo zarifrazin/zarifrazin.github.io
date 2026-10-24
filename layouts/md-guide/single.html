@@ -1,0 +1,76 @@
+{{ define "head" }}
+<meta name="description" content="{{ .Params.summary | default .Title }}">
+<link rel="stylesheet" href="{{ (printf "%scss/single.css" (.Site.Params.staticPath | default "")) | relURL }}">
+<script defer src="{{ (printf "%sfontawesome-6/all-6.4.2.js" (.Site.Params.staticPath | default "")) | relURL }}"></script>
+{{ partial "md-guide/style.html" . }}
+{{ partial "md-guide/schema.html" . }}
+{{ end }}
+
+{{ define "title" }}
+{{ .Title }} | {{ .CurrentSection.Params.short | default .CurrentSection.Title }}
+{{ end }}
+
+{{ define "main" }}
+{{ $guide := .CurrentSection }}
+{{ $chapters := $guide.Pages.ByWeight }}
+{{ $num := 0 }}
+{{ range $i, $p := $chapters }}{{ if eq $p $ }}{{ $num = add $i 1 }}{{ end }}{{ end }}
+{{ $prev := "" }}{{ $next := "" }}
+{{ if gt $num 1 }}{{ $prev = index $chapters (sub $num 2) }}{{ end }}
+{{ if lt $num (len $chapters) }}{{ $next = index $chapters $num }}{{ end }}
+
+<section id="single" class="py-5">
+  <div class="container">
+    <div class="row justify-content-center">
+
+      <aside class="guide-aside col-lg-3 d-none d-lg-block">
+        <div class="guide-sidebar">
+          <h6><a href="{{ $guide.RelPermalink }}" class="text-decoration-none" style="color: inherit;">{{ $guide.Params.short | default $guide.Title }}</a></h6>
+          {{ partial "md-guide/chapters.html" (dict "guide" $guide "current" .) }}
+        </div>
+      </aside>
+
+      <div class="col-sm-12 col-md-10 col-lg-8">
+        <nav class="guide-crumbs">
+          <a href="{{ $guide.RelPermalink }}">{{ $guide.Params.short | default $guide.Title }}</a> ›
+          <span>Chapter {{ $num }} of {{ len $chapters }}</span>
+        </nav>
+
+        <details class="guide-mobile-toc d-lg-none">
+          <summary>All chapters</summary>
+          {{ partial "md-guide/chapters.html" (dict "guide" $guide "current" .) }}
+        </details>
+
+        <div class="title mb-4">
+          <span class="guide-kicker">Chapter {{ $num }}</span>
+          <h1 class="mb-3">{{ .Title }}</h1>
+          {{ with .Params.summary }}<p class="lead" style="font-size: 1.1rem; opacity: 0.85;">{{ . }}</p>{{ end }}
+        </div>
+
+        {{ with .Params.learn }}
+        <div class="guide-learn">
+          <strong>New in this chapter</strong>
+          <ul>{{ range . }}<li>{{ . | markdownify }}</li>{{ end }}</ul>
+        </div>
+        {{ end }}
+
+        <article class="page-content" style="line-height: 1.8; font-size: 1.08rem;">
+          {{ .Content }}
+        </article>
+
+        <nav class="guide-pager" aria-label="Chapter navigation">
+          {{ with $prev }}
+          <a href="{{ .RelPermalink }}" class="prev"><small>← Previous</small><span>{{ .Params.short | default .Title }}</span></a>
+          {{ end }}
+          {{ with $next }}
+          <a href="{{ .RelPermalink }}" class="next"><small>Next →</small><span>{{ .Params.short | default .Title }}</span></a>
+          {{ else }}
+          <a href="{{ $guide.RelPermalink }}" class="next"><small>Finished</small><span>Back to the guide overview</span></a>
+          {{ end }}
+        </nav>
+      </div>
+
+    </div>
+  </div>
+</section>
+{{ end }}

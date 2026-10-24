@@ -1,0 +1,18 @@
+{{- /*
+  Show a text file from static/ (e.g. a LAMMPS input script) with a download link,
+  so the page and the downloadable file never drift apart:
+    {{< lmpfile src="/documents/md-lammps-guide/graphene/graphene.lmp" >}}
+    {{< lmpfile src="..." title="Full script" open="true" lang="bash" >}}
+*/ -}}
+{{- $src := .Get "src" -}}
+{{- $title := .Get "title" | default (path.Base $src) -}}
+{{- $lang := .Get "lang" | default "bash" -}}
+{{- $open := eq (.Get "open") "true" -}}
+{{- $body := readFile (path.Join "static" $src) -}}
+<details class="guide-file"{{ if $open }} open{{ end }}>
+  <summary><i class="fas fa-file-code"></i>{{ $title }}<span class="gf-toggle"></span></summary>
+  {{ highlight $body $lang "" }}
+  <div class="gf-actions">
+    <a href="{{ $src | relURL }}" download><i class="fas fa-download me-1"></i>Download {{ path.Base $src }}</a>
+  </div>
+</details>

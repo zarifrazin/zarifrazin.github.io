@@ -1,0 +1,77 @@
+# Initial setup 
+variable project string droplet
+variable t equal 90 # temperature (K)
+
+log           ${project}_log.txt
+units           metal # grams/mole, angstroms, ps, eV, K, bars, gm/cm^3
+dimension      3
+boundary       p p f
+atom_style     atomic
+
+# Building the graphene structure
+
+variable l equal 50.0 # length of a the cubic droplet side
+variable L equal $(4*v_l) # length of the simulation box in x direction
+variable W equal $(v_l) # length of the simulation box in y direction
+variable H equal $(5*v_l) # length of the simulation box in z direction
+
+region box block 0 ${L} 0 ${W} 0 ${H} units box
+create_box 2 box
+mass 1 39.948 # mass of argon atom
+mass 2 63.546 # mass of copper atom
+
+# Generating copper plate
+lattice fcc 3.610
+region plate block 0 ${L} 0 ${W} 0 5 units box
+create_atoms 2 region plate
+
+# Generating argon vapor
+lattice fcc 25.068
+region vapor block 0 ${L} 0 ${W} 5 ${H} units box
+create_atoms 1 region vapor
+
+# Generating cubic droplet
+region droplet block $(v_L/2.0-v_l/2.0) $(v_L/2.0+v_l/2.0) &
+ $(v_W/2.0-v_l/2.0) $(v_W/2.0+v_l/2.0) &
+ 5 $(5+v_l) units box
+delete_atoms region droplet
+lattice fcc 5.85
+create_atoms 1 region droplet
+
+velocity all create $t 12345 dist gaussian
+
+# Definition of interatomic potential
+pair_style hybrid eam lj/cut 10.0 
+pair_coeff  2 2  eam Cu_u3.eam
+pair_coeff	1 1 lj/cut 0.0103 3.405 8.5
+pair_coeff	1 2 lj/cut $(0.03*0.06489) 2.872 11.9
+
+# Simulation settings
+timestep 0.00025
+neighbor 3.0 bin
+neigh_modify delay 0 every 1 check yes
+# applying reflective boundary condtions at the top of the box
+fix wall1 all wall/reflect zhi EDGE
+# fixing the bottome layer of the copper plate
+region bottom block 0 ${L} 0 ${W} 0 1 units box
+group bottom region bottom
+fix  bwall bottom setforce 0.0 0.0 0.0
+velocity bottom  set 0.0 0.0 0.0
+group mobile subtract all bottom
+
+write_data ${project}_data_init.txt
+
+min_style cg
+minimize 1e-10 1e-12 10000 100000
+
+
+write_data ${project}_data.txt
+
+# Equilibration
+compute Tmobile mobile temp
+fix 1 mobile nvt temp $t $t $(100.0*dt)
+thermo 1000
+thermo_style custom step temp etotal press
+thermo_modify temp Tmobile
+dump 1 all custom 1000 ${project}_dump.txt id type x y z vx vy vz
+run 200000

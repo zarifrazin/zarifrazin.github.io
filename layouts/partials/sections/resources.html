@@ -3,7 +3,7 @@
 {{ $resSection := site.GetPage "section" $resPath }}
 {{ $allRes := slice }}
 {{ if $resSection }}
-  {{ $allRes = $resSection.RegularPages }}
+  {{ $allRes = $resSection.Pages }}
 {{ end }}
 {{ $currentNumOfRes := len $allRes }}
 

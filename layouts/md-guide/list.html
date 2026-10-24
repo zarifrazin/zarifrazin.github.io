@@ -1,0 +1,51 @@
+{{ define "head" }}
+<meta name="description" content="{{ .Params.summary | default .Title }}">
+<link rel="stylesheet" href="{{ (printf "%scss/single.css" (.Site.Params.staticPath | default "")) | relURL }}">
+<script defer src="{{ (printf "%sfontawesome-6/all-6.4.2.js" (.Site.Params.staticPath | default "")) | relURL }}"></script>
+{{ partial "md-guide/style.html" . }}
+{{ partial "md-guide/schema.html" . }}
+{{ end }}
+
+{{ define "title" }}
+{{ .Title }} | {{ .Site.Title }}
+{{ end }}
+
+{{ define "main" }}
+{{ $resSection := site.GetPage "section" (.Site.Params.resources.path | default "resources") }}
+<section id="single" class="py-5">
+  <div class="container">
+    <div class="row justify-content-center">
+      <div class="col-sm-12 col-md-10 col-lg-8">
+        <nav class="guide-crumbs">
+          {{ with $resSection }}<a href="{{ .RelPermalink }}">{{ .Title }}</a> ›{{ end }}
+          <span>{{ .Params.short | default .Title }}</span>
+        </nav>
+
+        <div class="title mb-4">
+          <span class="guide-kicker">{{ .Params.category }}</span>
+          <h1 class="mb-3">{{ .Title }}</h1>
+          {{ with .Params.summary }}<p class="lead" style="font-size: 1.15rem; opacity: 0.85;">{{ . }}</p>{{ end }}
+        </div>
+
+        {{ with .Params.downloads }}
+        <div class="d-flex gap-2 flex-wrap mb-4">
+          {{ range . }}
+          <a href="{{ .path | relURL }}" class="btn btn-outline-secondary btn-sm" {{ if .download }}download{{ else }}target="_blank" rel="noopener"{{ end }}>
+            <i class="fas {{ .icon | default "fa-download" }} me-1"></i>{{ .name }}
+          </a>
+          {{ end }}
+        </div>
+        {{ end }}
+
+        <article class="page-content" style="line-height: 1.8; font-size: 1.08rem;">
+          {{ .Content }}
+        </article>
+
+        <div class="text-center pt-4">
+          <a href="{{ with $resSection }}{{ .RelPermalink }}{{ else }}/resources/{{ end }}" class="btn btn-outline-secondary rounded-pill px-4">← Back to Resources</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+{{ end }}

@@ -1,0 +1,18 @@
+{{- /* SEO: describe guide pages to search engines as technical articles by the site author */ -}}
+{{- $guide := cond .IsSection . .CurrentSection -}}
+{{- $article := dict
+  "@context" "https://schema.org"
+  "@type" "TechArticle"
+  "headline" .Title
+  "description" (.Params.summary | default .Title)
+  "url" .Permalink
+  "inLanguage" "en"
+  "author" (dict "@type" "Person" "name" "Zarif Ahmad Razin Bhuiyan" "url" site.BaseURL)
+  "about" (slice "Molecular Dynamics" "LAMMPS" "OVITO")
+  "learningResourceType" "Tutorial"
+-}}
+{{- with $guide.Date }}{{ if not .IsZero }}{{ $article = merge $article (dict "datePublished" (.Format "2006-01-02")) }}{{ end }}{{ end -}}
+{{- if not .IsSection }}
+{{- $article = merge $article (dict "isPartOf" (dict "@type" "CreativeWorkSeries" "name" $guide.Title "url" $guide.Permalink)) -}}
+{{- end }}
+<script type="application/ld+json">{{ $article | jsonify | safeJS }}</script>

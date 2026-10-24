@@ -1,0 +1,12 @@
+{{- /*
+  Inline an SVG from static/ inside a captioned figure. Inlining (instead of <img>)
+  lets the drawing's currentColor follow the page text color in light and dark mode.
+    {{< svgfig src="/images/resources/md-lammps-guide/cnt-rolling.svg" caption="..." width="560" >}}
+*/ -}}
+{{- $src := .Get "src" -}}
+<figure>
+  <div style="max-width: {{ .Get "width" | default "100%" }}{{ with .Get "width" }}px{{ end }}; margin: 0 auto;">
+    {{ readFile (path.Join "static" $src) | safeHTML }}
+  </div>
+  {{ with .Get "caption" }}<figcaption>{{ . | markdownify }}</figcaption>{{ end }}
+</figure>

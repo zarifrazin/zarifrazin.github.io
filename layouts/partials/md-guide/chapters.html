@@ -1,0 +1,13 @@
+{{- /*
+  Numbered list of the guide's chapters, with the current one highlighted.
+  Usage: {{ partial "md-guide/chapters.html" (dict "guide" $guide "current" .) }}
+*/ -}}
+<ol class="guide-chapters">
+  {{- range $i, $p := .guide.Pages.ByWeight }}
+  <li>
+    <a href="{{ $p.RelPermalink }}"{{ if eq $p $.current }} class="active" aria-current="page"{{ end }}>
+      <span class="num">{{ add $i 1 }}</span><span>{{ $p.Params.short | default $p.Title }}</span>
+    </a>
+  </li>
+  {{- end }}
+</ol>
