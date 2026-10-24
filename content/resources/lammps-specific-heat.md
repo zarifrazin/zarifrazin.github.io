@@ -14,6 +14,8 @@ featured: true
 math: true
 ---
 
+*New to LAMMPS? Start with my [beginner's guide to molecular dynamics](/resources/md-lammps-guide/). Its [last chapter](/resources/md-lammps-guide/try-it-yourself/) builds a simpler version of this system step by step.*
+
 ### Simulation Description
 This resource contains a sample LAMMPS input script to compute the constant volume specific heat capacity ($C_v$) of liquid argon confined between solid copper walls with hybrid wettability (the script loops over the fraction of hydrophilic area and the two wettability strengths), using equilibrium molecular dynamics (EMD). The solid-liquid interaction is modeled using the Lennard-Jones (LJ) potential.
 

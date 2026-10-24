@@ -74,7 +74,7 @@ Menus:
         section: achievements
     - name: "Resources"
       url: "/#resources"
-      weight: 35
+      weight: 17
       params:
         section: resources
     - name: "Life Events"
@@ -99,7 +99,7 @@ params:
   #   - if fewer than `count` are featured, the newest other posts fill in up to `count`
   title: "Zarif Ahmad Razin Bhuiyan"
   # Search engines: shown as the home page title and the snippet under it in Google
-  description: "Zarif Ahmad Razin Bhuiyan (AB Zarif Razin) is a PhD student and Graduate Research Assistant in Mechanical Engineering at NC State University, studying nanoscale thermal transport with molecular dynamics."
+  description: "Zarif Ahmad Razin Bhuiyan (AB Zarif Razin) is a PhD student in Mechanical Engineering at NC State University and a BUET graduate, studying nanoscale heat transfer in polymers and soft matter with molecular dynamics (LAMMPS) and DFT."
   seo:
     homeTitle: "Zarif Ahmad Razin Bhuiyan | PhD Researcher, NC State University"
   # Default preview image when a page is shared or shown in search
@@ -161,8 +161,8 @@ params:
     enable: true
     intro: "Hi, my name is"
     title: "Zarif Ahmad Razin Bhuiyan"
-    subtitle: "Mechanical Engineer and Researcher"
-    content: "Hi, I'm Zarif. I am a Graduate Research Assistant and PhD student in the Department of Mechanical and Aerospace Engineering at North Carolina State University. I conduct research on nano-scale thermal transport using Molecular Dynamics simulations in Dr. Jun Liu's lab. Previously, I obtained my undergraduate degree from Bangladesh University of Engineering and Technology (BUET)."
+    subtitle: "PhD Student · Heat Transfer in Soft Matter"
+    content: "I'm a PhD student and Graduate Research Assistant in Mechanical and Aerospace Engineering at North Carolina State University, working in Dr. Jun Liu's Nanoscale Heat Transfer Lab. I use molecular simulations to understand how heat moves through polymers and other soft materials at atomic scale."
     button:
       enable: true
       name: "Get in Touch"
@@ -190,21 +190,24 @@ params:
     enable: true
     title: "About Me"
     content: |-
-      Greetings and welcome to my personal website! I'm Zarif, a Mechanical Engineering researcher and educator. Though I was born in the Cumilla district, my childhood was spent in the village of Kalipur in the Chandpur district, situated on the tranquil banks of the magnificent Meghna River.
+      I study **nanoscale heat transfer in polymers and soft matter**: how heat is carried, stored, and blocked when structure at the scale of atoms and molecules controls it. My core methods are molecular dynamics (LAMMPS), polymer structure building with EMC (Enhanced Monte Carlo), and density functional theory (Gaussian). My work spans two themes. At **solid–liquid interfaces**, I have studied nano-confined liquids, surface wettability, and glucose–carbon nanotube interfaces. In **thermal transport**, I have worked on hybrid perovskites, polymer composites, and the glass transition.
 
-      I completed my Bachelor's degree in Mechanical Engineering from Bangladesh University of Engineering and Technology (BUET) in May 2022, and I am currently pursuing a PhD in Mechanical Engineering at NC State University (NCSU) in the USA. Before joining NCSU, I served as a Lecturer at Sonargaon University (SU) and a Teaching Assistant (TA) at BUET.
+      I joined NC State in Fall 2024 with a Provost Doctoral Fellowship. Before that, I graduated with Honours in Mechanical Engineering from Bangladesh University of Engineering and Technology (BUET) in 2022, and taught as a Lecturer at Sonargaon University and as a Teaching Assistant at BUET.
 
-      Through this website, I hope to share my journey, insights, and experiences with you as we explore new frontiers and learn from one another.
+      I enjoy teaching, and I share tutorials and simulation scripts on this site, including a [beginner's guide to molecular dynamics with LAMMPS](/resources/md-lammps-guide/) based on a guest lecture I gave at NC State.
+
+      I was born in Cumilla, Bangladesh, and grew up in the village of Kalipur in Chandpur, on the banks of the Meghna River.
     skills:
-      enable: false
-      title: "Here are a few areas and technologies I work with:"
+      enable: true
+      title: "Research expertise:"
       items:
-        - "Molecular Dynamics (MD) / LAMMPS"
-        - "Finite Element Analysis (FEA) / ANSYS"
-        - "Computational Fluid Dynamics (CFD)"
-        - "MATLAB & Python Programming"
-        - "CAD Modeling & 3D Printing"
-        - "Heat Transfer Equipment Design"
+        - "Nanoscale Heat Transfer"
+        - "Polymers & Soft Matter"
+        - "Molecular Dynamics / LAMMPS"
+        - "Polymer Building / EMC"
+        - "DFT / Gaussian"
+        - "FEA & CFD / ANSYS"
+        - "Python, MATLAB"
 
   # Experience Section
   experience:
@@ -257,6 +260,9 @@ params:
       - "Tutorials & Guides"
       - "Handouts & PDFs"
       - "Skills Showcase"
+    # extra filter buttons that match a tag instead of a category
+    tagFilters:
+      - "LAMMPS"
 
   # Gallery Section
   gallery:

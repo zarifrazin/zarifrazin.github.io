@@ -106,6 +106,9 @@
       {{ range $categories }}
       <button class="btn filter-btn" data-filter="{{ . | lower }}">{{ . }}</button>
       {{ end }}
+      {{ range .Site.Params.resources.tagFilters }}
+      <button class="btn filter-btn" data-filter="tag:{{ . | lower }}">{{ . }}</button>
+      {{ end }}
     </div>
   </div>
 
@@ -180,7 +183,11 @@
                               summary.includes(searchQuery) || 
                               badges.includes(searchQuery);
                               
-        const matchesCategory = activeFilter === "all" || category === activeFilter.toLowerCase();
+        // "tag:<name>" buttons match a tag; all other buttons match the category
+        const matchesCategory = activeFilter === "all" ||
+          (activeFilter.startsWith("tag:")
+            ? (" " + badges + " ").includes(" " + activeFilter.slice(4) + " ")
+            : category === activeFilter.toLowerCase());
 
         if (matchesCategory && matchesSearch) {
           card.style.display = "block";

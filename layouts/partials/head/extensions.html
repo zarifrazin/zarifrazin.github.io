@@ -14,17 +14,26 @@
   "@context" "https://schema.org"
   "@type" "Person"
   "name" "Zarif Ahmad Razin Bhuiyan"
-  "alternateName" (slice "AB Zarif Razin" "Zarif Razin" "Z. A. R. Bhuiyan")
+  "givenName" "Zarif Ahmad Razin"
+  "familyName" "Bhuiyan"
+  "alternateName" (slice "AB Zarif Razin" "Zarif Razin" "Zarif Ahmad Razin" "Zarif Bhuiyan" "Z. A. R. Bhuiyan")
   "url" .Site.BaseURL
   "image" ("/images/profile.jpg" | absURL)
-  "jobTitle" "Graduate Research Assistant"
+  "jobTitle" "PhD Student and Graduate Research Assistant"
   "description" .Site.Params.description
-  "affiliation" (dict "@type" "CollegeOrUniversity" "name" "North Carolina State University" "url" "https://www.ncsu.edu")
-  "alumniOf" (slice (dict "@type" "CollegeOrUniversity" "name" "Bangladesh University of Engineering and Technology" "url" "https://www.buet.ac.bd") (dict "@type" "CollegeOrUniversity" "name" "North Carolina State University" "url" "https://www.ncsu.edu"))
-  "knowsAbout" (slice "Molecular Dynamics" "Nanoscale Thermal Transport" "Heat Transfer" "LAMMPS" "Mechanical Engineering")
+  "affiliation" (dict "@type" "CollegeOrUniversity" "name" "North Carolina State University" "alternateName" "NC State University" "url" "https://www.ncsu.edu")
+  "alumniOf" (slice (dict "@type" "CollegeOrUniversity" "name" "Bangladesh University of Engineering and Technology" "alternateName" "BUET" "url" "https://www.buet.ac.bd") (dict "@type" "CollegeOrUniversity" "name" "North Carolina State University" "url" "https://www.ncsu.edu"))
+  "nationality" (dict "@type" "Country" "name" "Bangladesh")
+  "workLocation" (dict "@type" "Place" "name" "Raleigh, North Carolina, USA")
+  "knowsAbout" (slice "Molecular Dynamics" "LAMMPS" "Nanoscale Heat Transfer" "Thermal Transport" "Polymers" "Soft Matter" "Solid-Liquid Interfaces" "Density Functional Theory" "Mechanical Engineering")
   "sameAs" $sameAs
 -}}
 <script type="application/ld+json">{{ $person | jsonify | safeJS }}</script>
+{{ end }}
+
+{{- /* SEO: tag and category listing pages are thin; keep them out of search results but let crawlers follow their links */ -}}
+{{ if in (slice "taxonomy" "term") .Kind }}
+<meta name="robots" content="noindex, follow">
 {{ end }}
 
 <!-- Uniform "View All" button style across all sections -->
@@ -46,6 +55,11 @@
     color: #ffffff !important;
     box-shadow: 0 4px 14px rgba(204, 0, 0, 0.3);
     transform: scale(1.02);
+  }
+  /* Hero: theme forces full screen height (100vh), leaving a large empty gap below the short hero; size it to its content */
+  #hero {
+    min-height: 0 !important;
+    padding-bottom: 3rem !important;
   }
   /* Fix: header z-index is 10 in theme, same as gallery badges — raise it above all page content */
   #profileHeader {

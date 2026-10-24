@@ -2,7 +2,7 @@
 title: "LAMMPS Code Samples"
 date: 2024-09-01
 summary: "LAMMPS input scripts for thermal rectification of graphene and contact angle of argon on a solid copper surface."
-category: "Skills Showcase"
+category: "Tutorials & Guides"
 tags:
   - "LAMMPS"
   - "Molecular Dynamics"
@@ -12,6 +12,8 @@ pdf: "/documents/skills/lammps/graphene-rectification-code.pdf"
 featured: false
 preview_open: true # true = file previews start open; false = "Show preview" button
 ---
+
+*New to LAMMPS? Start with my [beginner's guide to molecular dynamics](/resources/md-lammps-guide/).*
 
 LAMMPS code to observe **thermal rectification of graphene** (partial)
 

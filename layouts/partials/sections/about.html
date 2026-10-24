@@ -18,7 +18,7 @@
                 <div class="mt-4">
                     <strong>{{ $about.skills.title | default .Site.Params.about.skills.title }}</strong>
                 </div>
-                <ul>
+                <ul style="grid-template-columns: repeat(auto-fill, minmax(230px, 1fr));">
                     {{ range .Site.Params.about.skills.items }}
                     <li>{{ . | markdownify }}</li>
                     {{ end }}
