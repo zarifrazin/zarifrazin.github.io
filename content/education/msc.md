@@ -7,6 +7,6 @@ date: 2026-10-01
 featured: true
 ---
 * **Degree Type**: En route master's, earned during the PhD program.
-* **GPA**: 4.00/4.00.
+* **CGPA**: 4.00 out of 4.00
 * **Department**: Department of Mechanical and Aerospace Engineering.
 * **Location**: Raleigh, North Carolina, USA.

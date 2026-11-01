@@ -310,6 +310,15 @@ the zip files in that folder (or ask an AI to).
 - **Never add:** lecture recordings, `.pptx` source files, a CV with your phone
   number or home address, or anything over ~20 MB.
 
+**Updating the CV** (the "Download CV" button next to the photo):
+- The button opens `static/documents/cv/Zarif_Ahmad_Razin_Bhuiyan_CV.pdf`.
+- To update it, overwrite that file with the new PDF, **keeping the same name**,
+  so links already shared keep working.
+- Only the PDF goes here. Keep the LaTeX source in its own folder or Overleaf,
+  never in this repository: it is public, and `%` comments in the source would
+  be published too.
+- Before publishing, check the PDF has no phone number or home address.
+
 ---
 
 ## 7. Changing the home page text, menu and sections
@@ -320,6 +329,7 @@ All of these are in `hugo.yaml`:
 |---|---|
 | Name, subtitle and intro next to the photo | `params:` → `hero:` → `title`, `subtitle`, `content` |
 | Social icons under the intro | `hero:` → `socialLinks:` |
+| Button next to the social icons ("Download CV") | `hero:` → `button:` (see [Updating the CV](#6-images-and-files)) |
 | About Me text | `about:` → `content:` |
 | Research expertise list | `about:` → `skills:` → `items:` |
 | Menu items and their order | `Menus:` → `main:` (lower `weight` = further left) |

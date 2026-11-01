@@ -6,5 +6,6 @@ dateRange: "May 2022"
 date: 2022-05-01
 featured: false
 ---
+* **CGPA** : 3.76 out of 4.00
 * **Department**: Department of Mechanical Engineering.
 * **Location**: Dhaka, Bangladesh.
